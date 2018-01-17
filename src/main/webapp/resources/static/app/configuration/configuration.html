@@ -1,0 +1,138 @@
+                        <div class="tab-container">
+                            <div class="tools">
+                                <div class="col-sm-2 mine-select right-menu">
+                                    <select class="mines-select">
+                                        <optgroup>
+                                            <option value="1">Mine - 1</option>
+                                            <option value="2">Mine - 2</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            <ul class="nav nav-tabs nav-tabs-primary">
+                                <li ng-class="{active: isSet(1)}"><a href ng-click="setTab(1);" data-toggle="tab" aria-expanded="false"><span class="icon mdi"><img src="assets/img/icons/tab/timeline.png" alt=""></span>Configuration</a></li>
+                                
+                                
+                              <!--   
+                                <li ng-class="{active: isSet(1)}"><a href ng-click="setTab(1);" data-toggle="tab" aria-expanded="false"><span class="icon mdi"><img src="assets/img/icons/tab/driver-profile.png" alt=""></span>Driver Profile</a></li>
+                                <li ng-class="{active: isSet(2)}"><a href ng-click="setTab(2);" data-toggle="tab" aria-expanded="false"><span class="icon mdi"><img src="assets/img/icons/tab/driver-bcon-mapping.png" alt=""></span>Driver - Beacon Mapping</a></li>
+                            
+                                 -->
+                                
+                            </ul>
+                            <div class="tab-content">
+                                <div id="configuration" ng-show="isSet(1)" class="tab-pane active">
+                                    <div class="row">
+                                        <div class="page-title">
+                                            <div class="col-sm-2 pull-right text-right action-icons">
+                                                <a data-toggle="modal" data-target="#form-config"><img src="assets/img/icons/tab/add.png" title="Add" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table class="table table-condensed table-striped table-bordered table-inverted">
+                                        <thead>
+                                            <tr>
+                                                <th>Configuration Type</th>
+                                                <th>Range From</th>
+                                                <th>Range To</th>
+                                                <th>Status/Message</th>
+                                                <th>Code/Interval</th>
+                                                <th>Notification</th>
+                                                <th class="text-center"><img src="assets/img/icons/table/edit.png" alt=""></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                             <tr ng-repeat="config in configs">
+                                                <td>{{config.configurationType}}</td>
+                                                <td>{{config.fromRange}}</td>
+                                                <td>{{config.toRange}}</td>
+                                                <td>{{config.status}}</td>
+                                                <td>{{config.code}}</td>
+                                                <td>{{config.notification}}</td>
+                                                <td class="actions"><a href="#" data-toggle="modal" data-target="#form-config" ng-click=";"> 
+                                                <img src="assets/img/icons/tab/edit.png" title="Edit" alt=""></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                <!--Form Modals-->
+            <div id="form-config" tabindex="-1" role="dialog" class="modal fade">
+                <div class="modal-dialog custom-width">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" data-dismiss="modal" aria-hidden="true" class="close md-close"><span class="mdi mdi-close"></span></button>
+                            <a href="#" class="close md-help"><span class="mdi mdi-help"></span></a>
+                            <p class="modal-title">Configuration</p>
+                        </div>
+                        <form name="configurationForm" ng-submit="save(config);" >                        
+                        <div class="modal-body">
+                            <div class="row">
+                                
+                                    <div class="col-sm-6">
+                                        <div class="form-group required">
+                                            <label>Configuration Type</label>
+                                          
+                                            <!-- <input type="text" no-special-char placeholder="" name="configurationType" class="form-control"
+                                             ng-model="config.configurationType" ng-required="true"> -->
+                                             <select class="form-control" name="configurationType" ng-model="config.configurationType" ng-required="true">
+														<option value=''>Select Configuration Type</option>
+														<option value="Device Status">Device Status</option>
+														<!-- <option value="false">FALSE</option> -->
+											
+													</select>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group required">
+                                            <label>Status</label>
+                                            <input type="text" no-special-char placeholder="" name="status" class="form-control" ng-model="config.status" ng-required="true">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group required">
+                                            <label>Range From</label>
+                                           <input type="text" no-special-char placeholder="" name="fromRange" ng-init="config.fromRange='0'" class="form-control" ng-model="config.fromRange" ng-required="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group required">
+                                            <label>Range To</label>
+                                             <input type="text" no-special-char placeholder="" name="toRange" ng-init="config.toRange='0'" class="form-control" ng-model="config.toRange" ng-required="true">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-sm-6">
+                                        <div class="form-group required">
+                                            <label>Code</label>
+                                            <input type="text" no-special-char placeholder="" name="code" class="form-control" ng-model="config.code" ng-required="true">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group required">
+                                            <label>Notification</label>
+<!--                                             <input type="text" no-special-char placeholder="" name="status" class="form-control" ng-model="config.notification" ng-required="true">
+ -->                                        	<select class="form-control" name="notification" ng-model="config.notification" ng-required="true">
+														<option value=''>Select notification</option>
+														<option value="true">TRUE</option>
+														<option value="false">FALSE</option>
+											
+													</select>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        		<center><div ng-show="succsmessage" style="color:#009933 ">{{succsmessage}}</div></center>
+                           <center><div ng-show="errmessage" style="color:#ff3300 ">{{errmessage}}</div></center>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" value="submit">
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>

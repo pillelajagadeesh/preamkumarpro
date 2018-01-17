@@ -1,0 +1,7 @@
+
+logs/maanyavahika-logging\.log
+
+logs/spring-boot-logging\.log
+
+logs/
+/target/

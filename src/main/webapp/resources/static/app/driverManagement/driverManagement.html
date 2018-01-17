@@ -1,0 +1,563 @@
+             <div class="main-content container-fluid">
+                    <div class="panel panel-default">
+                        <div class="tab-container">
+                            <div class="tools">
+                                <div class="col-sm-2 mine-select right-menu">
+                                    <!-- <select class="mines-select" ng-options="mine.mine as mine.mine for mine in mines">
+                                        <option value="1">Mine 1</option>
+                                        <option value="2">Samaleswari</option>
+                                    </select> -->
+                                    <select class="form-control" name="minefilter" ng-model="driver.minefilter" ng-options="mine.mine as mine.mine for mine in mines" ng-required="true">
+											    <option value="">Select Mine</option>
+<!-- 												<option value="Jharsuguda">Jharsuguda</option>
+												<option value="Samaleswari">Samaleswari</option> -->
+											
+										</select>
+                                </div>
+                            </div>
+                            <ul class="nav nav-tabs nav-tabs-primary">
+                                <li ng-class="{active: isSet(1)}"><a href ng-click="setTab(1);" data-toggle="tab" aria-expanded="false"><span class="icon mdi"><img src="assets/img/icons/tab/driver-profile.png" alt=""></span>Driver Profile</a></li>
+                                <li ng-class="{active: isSet(2)}"><a href ng-click="setTab(2);" data-toggle="tab" aria-expanded="false"><span class="icon mdi"><img src="assets/img/icons/tab/driver-bcon-mapping.png" alt=""></span>Driver - Beacon Mapping</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="driver-profile" ng-show="isSet(1)"> <!-- class="tab-pane active" -->
+                                    <div class="row">
+                                        <div class="page-title">
+                                            <div class="col-sm-3">
+                                                <div class="input-group">
+                                                    <input placeholder="Search.." class="form-control search-input" ng-model="text" ng-change="searchDriver(text);" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 pull-right text-right action-icons">
+                                                <a href="" class="" data-toggle="modal" data-target="#form-drAdd" ng-click="addOrEditDriverProfile(undefined);"><img src="assets/img/icons/tab/add.png" title="Add" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table class="table table-condensed table-bordered table-striped table-inverted">
+                                        <thead>
+                                            <tr>
+                                                <th>Mine</th>
+                                                <th>Photo</th>
+                                                <th>Emp. ID</th>
+                                                <th>Driver ID </th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Role</th>
+                                                <th>Contract Agency</th>
+                                                <th>Contract Exp. Date</th>
+                                                <th>License Exp. Date</th>
+                                                <th>Current Status</th>
+                                                <th class="actions"><a href="#"><img src="assets/img/icons/table/edit.png" alt=""></a></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="driver in drivers">
+                                                <td>{{::driver.mine}}</td>
+                                                <td>{{::drver.photo}}</td>
+                                                <td>{{::driver.empId}}</td>
+                                                <td>{{::driver.driverId}}</td>
+                                                <td>{{::driver.driverFirstName}}</td>
+                                                <td>{{::driver.driverLastName}}</td>
+                                                <td>{{::driver.driverRole}}</td>
+                                                <td>{{::driver.contractAgency}}</td>
+                                                <td>{{::driver.contractExpiryDate}}</td>
+                                                <td>{{::driver.driverLiscenceExpiryDate}}</td>
+                                                <td>{{::driver.driverStatus}}</td>
+                                               
+                                               <!--  <td class="actions"><button type="button" class="btn btn-space btn-default btn-social"
+                                                 data-toggle="modal" data-target="#form-drAdd" ng-click="addOrEditDriverProfile(driver);">
+                                                 <i class="icon mdi mdi-edit"></i></button></td> -->
+                                                  
+                                                <!--  <td><img ng-src="{{driver.driverStatus == 'ACTIVE' && 'assets/img/icons/misc/active.png' || 'assets/img/icons/misc/status-inactive.png'}}"/></td> -->
+                                                 <td class="actions"><a href="" data-toggle="modal" data-target="#form-drAdd" ng-click="addOrEditDriverProfile(driver);"><img src="assets/img/icons/tab/edit.png" title="edit" alt=""></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                    <p class="pagination-text" ng-cloak>Showing {{(size*(page-1))+1}} to {{(size*page)-(size-numberOfElements)}} of {{totalElements}} entries</p>
+                                        </div>
+                                        <div class="col-sm-6 text-right">
+                                            <nav>
+                                            <!--     <ul class="pagination">
+                                                    <li><a href="#" aria-label="Previous"><span aria-hidden="true" class="mdi mdi-chevron-left"></span></a></li>
+                                                    <li class="active"><a href="#">1</a></li>
+                                                    <li><a href="#">2</a></li>
+                                                    <li><a href="#">3</a></li>
+                                                    <li><a href="#">4</a></li>
+                                                    <li><a href="#">5</a></li>
+                                                    <li><a href="#">6</a></li>
+                                                    <li><a href="#">7</a></li>
+                                                    <li><a href="#" aria-label="Next"><span aria-hidden="true" class="mdi mdi-chevron-right"></span></a></li>
+                                                </ul> -->
+                                                <ul><paging href="" page="page"
+                                                page-size="size"
+                                                total="totalElements"
+                                                 show-prev-next="true"
+                                                show-first-last="true"
+                                                paging-action="pageChanged(page)">
+                                                </paging></ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="driver-beacons" ng-show="isSet(2)"> <!-- class="tab-pane cont" -->
+                                    <div class="row">
+                                        <div class="page-title">
+                                            <div class="col-sm-3">
+                                                <div class="input-group">
+                                                    <input placeholder="Search.." class="form-control search-input" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 pull-right text-right action-icons">
+                                                <a href="" class="" data-toggle="modal" data-target="#form-dbm" ng-click="addOrEditDriverBeacon(undefined);"><img src="assets/img/icons/tab/add.png" title="Add" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table class="table table-condensed table-bordered table-striped table-inverted">
+                                        <thead>
+                                            <tr>
+                                                <th>Mine</th>
+                                                <th>Employee ID </th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Employee Type</th>
+                                                <th>Contract Agency</th>
+                                                <th>Beacon ID</th>
+                                                <th class="text-center"><img src="assets/img/icons/table/edit.png" alt=""></th>
+                                                <!-- <th class="text-center"><img src="assets/img/icons/table/update.png" alt=""></th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="driverbeacon in driverbeacons"> <!-- ng-if="driver.driverId" -->
+                                                <td>{{::driverbeacon.mine}}</td>
+                                                <td>{{::driverbeacon.empId}}</td>
+                                                <td>{{::driverbeacon.driverFirstName}}</td>
+                                                <td>{{::driverbeacon.driverLastName}}</td>
+                                                <td>{{::driverbeacon.driverRole}}</td>
+                                                <td>{{::driverbeacon.contractAgency}}</td>
+                                                <td>{{::driverbeacon.driverId}}</td>
+                                                 <td class="actions"><a href="#" data-toggle="modal" data-target="#form-dbm" ng-click="addOrEditDriverBeacon(driverbeacon);"><img src="assets/img/icons/tab/edit.png" title="Edit" alt="" ></a></td>
+                                                <!-- <td class="actions"><a href="#"><img src="assets/img/icons/tab/update.png" alt=""></a></td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                           <p class="pagination-text" ng-cloak>Showing {{(size*(page-1))+1}} to {{(size*page)-(size-numberOfElements)}} of {{totalElements}} entries</p>
+                                        </div>
+                                        <div class="col-sm-6 text-right">
+                                            <nav>
+                                               <!--  <ul class="pagination">
+                                                    <li><a href="#" aria-label="Previous"><span aria-hidden="true" class="mdi mdi-chevron-left"></span></a></li>
+                                                    <li class="active"><a href="#">1</a></li>
+                                                    <li><a href="#">2</a></li>
+                                                    <li><a href="#">3</a></li>
+                                                    <li><a href="#">4</a></li>
+                                                    <li><a href="#">5</a></li>
+                                                    <li><a href="#">6</a></li>
+                                                    <li><a href="#">7</a></li>
+                                                    <li><a href="#" aria-label="Next"><span aria-hidden="true" class="mdi mdi-chevron-right"></span></a></li>
+                                                </ul> -->
+                                                <ul><paging href="" page="page"
+                                                page-size="size"
+                                                total="totalElements"
+                                                 show-prev-next="true"
+                                                show-first-last="true"
+                                                paging-action="driverBeaconpageChanged(page)">
+                                                </paging></ul>
+                                               </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form Modals-->
+                    <div id="form-drAdd" tabindex="-1" role="dialog" class="modal fade">
+                        <div class="modal-dialog full-width">
+                                <form name="driverProfileForm" ng-submit="save(driver.$valid);" novalidate>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close md-close"><span class="mdi mdi-close"></span></button>
+                                    <a href="#" class="close md-help"><span class="mdi mdi-help"></span></a>
+                                    <p class="modal-title" ng-if="!driver.id">Add Driver</p>
+                                    <p class="modal-title" ng-if="driver.id">Update Driver</p>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="panel-heading panel-heading-divider">Profile Details</p>
+                                            <form action="assets/lib/dropzone/upload.php" class="dropzone">
+                                                <div class="dz-message">
+                                                    <div class="icon"><span class="mdi mdi-cloud-upload"></span></div>
+                                                    <p>Drag and Drop files here</p>
+                                                </div>
+                                            </form>
+                                            <div class="form-group required">
+                                                <select class="form-control" name="status" ng-model="driver.driverStatus" ng-required="true">
+                                                    <option value=''>Select Status</option>
+                                                    <option value="ACTIVE">ACTIVE</option>
+                                                    <option value="INACTIVE">INACTIVE</option>
+                                                </select>
+                                                    <div style="color:red" ng-show="driverProfileForm.status.$error.required && driverProfileForm.status.$touched">Status is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="panel-heading panel-heading-divider">Basic Details</p>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group required">
+                                                        <label>Mine</label>
+                                                        <!-- <input type="text" placeholder="" name="mine" class="form-control" ng-model="driver.mine" ng-required="true"> -->
+                                                        <select class="form-control" name="mine" ng-model="driver.mine" ng-options="mine.mine as mine.mine for mine in mines" ng-required="true">
+											    <option value="">Select Mine</option>
+<!-- 												<option value="Jharsuguda">Jharsuguda</option>
+												<option value="Samaleswari">Samaleswari</option> -->
+											
+										</select>
+                                                    <div style="color:red" ng-show="driverProfileForm.mine.$error.required && driverProfileForm.mine.$touched">Mine is required</div>
+                                                    </div>
+                                                </div>
+                                                <!--  <div class="col-sm-4" ng-if="driver.empId">
+                                                 Employee ID : {{driver.empId}}
+                                                 <label>Employee ID</label>
+                                                 <input type="text" class="form-control" ng-init="driver.empId='0'" readonly>
+                                                 </div> -->
+                                                <div class="col-sm-4">
+                                                	 <!-- <label  ng-if="driver.empId">Employee ID : {{driver.empId}}</label> -->
+                                                    <div class="form-group required">
+                                                        <label>Employee ID</label>
+                                                        
+                                                        <input type="text" no-special-char ng-readonly="driver.id" placeholder="" name="empId" class="form-control" ng-model="driver.empId" ng-required="true">
+                                                    <div style="color:red" ng-show="driverProfileForm.empId.$error.required && driverProfileForm.empId.$touched">Employee Id is required</div>
+                                                    </div>
+                                                </div>
+                                               
+<!--                                                 <div class="col-sm-4">
+                                                    <div class="form-group required">
+                                                        <label>Driver ID</label>
+                                                        <input type="text" placeholder="" no-special-char name="driverId" class="form-control" ng-model="driver.driverId" ng-required="true">
+                                                    <div style="color:red" ng-show="driverProfileForm.driverId.$error.required && driverProfileForm.driverId.$touched">DriverId is required</div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+								<p class="panel-heading panel-heading-divider">Personal
+									Details</p>
+								<div class="form-group required">
+									<label>First Name</label> <input type="text" no-special-char ng-pattern="/^[a-zA-Z]*$/" placeholder=""
+										name="driverFirstName" maxlength="15" class="form-control"
+										ng-model="driver.driverFirstName" ng-required="true">
+									<div style="color: red"
+										ng-show="driverProfileForm.driverFirstName.$error.required && driverProfileForm.driverFirstName.$touched">Driver
+										firstname is required</div>
+										
+										<div style="color: red"
+										ng-show="driverProfileForm.driverFirstName.$error.pattern && driverProfileForm.driverFirstName.$invalid">Enter valid Driver Name</div>
+								</div>
+								<div class="form-group required">
+									<label>Last Name</label> <input type="text" no-special-char ng-pattern="/^[a-zA-Z]*$/" placeholder=""
+										name="driverLastName"  maxlength="15" class="form-control"
+										ng-model="driver.driverLastName" ng-required="true">
+									<div style="color: red"
+										ng-show="driverProfileForm.driverLastName.$error.required && driverProfileForm.driverLastName.$touched">Driver
+										lastname is required</div>
+										<div style="color: red"
+										ng-show="driverProfileForm.driverLastName.$error.pattern && driverProfileForm.driverLastName.$invalid">Enter valid Last Name</div>
+								</div>
+								<div class="form-group required">
+									<label>Gender</label> <select class="form-control"
+										name="gender" ng-model="driver.gender" ng-required="true">
+										<option value="">Select Gender</option>
+										<option>Male</option>
+										<option>Female</option>
+									</select>
+									<div style="color: red"
+										ng-show="driverProfileForm.gender.$error.required && driverProfileForm.gender.$touched">Gender
+										is required</div>
+								</div>
+								<div class="form-group required" id='datetimepicker5'>
+									<label>DOB</label> 
+									 <div class="input-group"
+											     moment-picker="driver.dateOfBirth"
+											     format="DD/MM/YYYY"
+											     max-date="mydate">
+									<input type="text" placeholder=""
+										name="dateOfBirth" class="form-control"
+										ng-model="driver.dateOfBirth" ng-required="true" readonly></div>
+									<div style="color: red"
+										ng-show="driverProfileForm.dateOfBirth.$error.required && driverProfileForm.dateOfBirth.$touched">DateOfBirth
+										is required</div>
+
+
+
+
+									<!-- 	<input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dt" /> -->
+
+
+								</div>
+								<div class="form-group required">
+									<label>Mobile Number</label> <input type="text" no-special-char
+										ng-pattern="/^[0-9]*$/" placeholder="" name="mobileNumber"
+										minlength="10" maxlength="10" class="form-control"
+										ng-model="driver.mobileNo" ng-required="true">
+									<div style="color: red"
+										ng-show="driverProfileForm.mobileNumber.$error.required && driverProfileForm.mobileNumber.$touched">MobileNumber
+										is required</div>
+									<div style="color: red"
+										ng-show="driverProfileForm.mobileNumber.$error.pattern && driverProfileForm.mobileNumber.$invalid">Enter
+										valid mobile no</div>
+										<div style="color: red" ng-show="driverProfileForm.mobileNumber.$error.minlength">Enter 10 digits</div>
+										
+								</div>
+							</div>
+                                        <div class="col-sm-3">
+                                            <p class="panel-heading panel-heading-divider">Role</p>
+                                            <div class="form-group">
+                                                <label>Type</label>
+                                                <select class="form-control" name="driverRole" ng-model="driver.driverRole" ng-required="true">
+                                                <option value="">Select driver role</option> 
+                                                    <option>PERMANENT</option>
+                                                    <option>CONTRACT</option>
+                                                </select>
+                                                   <div style="color:red" ng-show="driverProfileForm.driverRole.$error.required && driverProfileForm.driverRole.$touched">Driver role is required</div>
+                                            </div>
+                                            <div class="form-group required">
+                                                <label>Contract Agency</label><!-- !driver.id && driver.driverRole == 'PERMANENT' && driver.driverRole == undefined || !driver.id && driver.driverRole == 'CONTRACT' -->
+                                                <input type="text" no-special-char ng-if="!driver.id" ng-disabled="driver.driverRole == 'PERMANENT'"  ng-pattern="/^[a-zA-Z]*$/"  placeholder="" name="contractAgency" class="form-control" ng-model="driver.contractAgency" ng-required="driver.driverRole == 'CONTRACT' && !driver.id">
+                                                   <input type="text" ng-if="driver.id && driver.driverRole == 'PERMANENT'"  ng-pattern="/^[a-zA-Z]*$/" ng-disabled="driver.driverRole == 'PERMANENT'" placeholder="" name="contractAgency" class="form-control">
+                                                   <input type="text" ng-if="driver.id && driver.driverRole == 'CONTRACT'"  ng-pattern="/^[a-zA-Z]*$/"  ng-disabled="driver.driverRole == 'PERMANENT'" placeholder="" name="contractAgency" class="form-control" ng-model="driver.contractAgency" ng-required="driver.driverRole == 'CONTRACT' && driver.id">
+<!--                                                  <input type="text" ng-hide="!driver.id && " ng-disabled="driver.driverRole == 'PERMANENT'" placeholder="" name="contractAgency" class="form-control" ng-model="driver.contractAgency" ng-required="driver.driverRole == 'CONTRACT'"> -->
+                                                   <div style="color:red" ng-show="driverProfileForm.contractAgency.$error.required && driverProfileForm.contractAgency.$touched">ContractAgency is required</div>
+                                                    <div style="color:red" ng-show="driverProfileForm.contractAgency.$error.pattern && driverProfileForm.contractAgency.$invalid">Special Character can't be taken</div> 
+                                            </div>
+                                            <!-- </div> -->
+                                            <div class="form-group required">
+                                                <label>Contract Exp. Date</label><!-- !driver.id && driver.driverRole == 'PERMANENT' || !driver.id && driver.driverRole == 'CONTRACT'" ng-disabled="driver.driverRole == 'PERMANENT' -->
+                                              <!--  <div class="input-group"
+											     moment-picker="driver.driverLiscenceExpiryDate"
+											     format="DD/MM/YYYY">
+											    <span class="input-group-addon">
+											        <i class="octicon octicon-calendar"></i>
+											    </span>
+											    <input class="form-control"
+											           placeholder="Select a date"
+											           ng-model="driver.driverLiscenceExpiryDate"
+											           ng-model-options="{ updateOn: 'blur' }">
+											           
+											</div> -->
+											
+                                           <div class="input-group"
+											     moment-picker="driver.contractExpiryDate"
+											     format="DD/MM/YYYY" min-date="example.currentDate">   <input  ng-if="!driver.id" ng-disabled="driver.driverRole == 'PERMANENT'" 
+                                              placeholder="" class="form-control" name="contractExpiryDate" ng-model="driver.contractExpiryDate" 
+                                              ng-required="driver.driverRole == 'CONTRACT' && !driver.id " ></div>
+                                              
+                                              <div class="input-group"
+											     moment-picker="driver.contractExpiryDate"
+											     format="DD/MM/YYYY" min-date="example.currentDate">    <input type="text" ng-if="driver.id && driver.driverRole == 'PERMANENT'" ng-disabled="driver.driverRole == 'PERMANENT'" 
+                                                  placeholder="" name="contractExpiryDate" class="form-control"></div>
+                                                  
+                                             <div class="input-group"
+											     moment-picker="driver.contractExpiryDate"
+											     format="DD/MM/YYYY" min-date="example.currentDate">     <input type="text" ng-if="driver.id && driver.driverRole == 'CONTRACT'" ng-disabled="driver.driverRole == 'PERMANENT'" 
+                                                  placeholder="" name="contractExpiryDate" class="form-control" ng-model="driver.contractExpiryDate"" 
+                                                  ng-required="driver.driverRole == 'CONTRACT' && driver.id"> </div>
+                                                  
+                                                                                              
+                                                   <div style="color:red" ng-show="driverProfileForm.contractExpiryDate.$error.required && driverProfileForm.contractExpiryDate.$touched">ContractExpiryDate is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <p class="panel-heading panel-heading-divider">License Details</p>
+                                            <div class="form-group required">
+                                                <label>License No</label>
+                                                <input type="text" no-special-char ng-pattern="/^[a-zA-Z0-9]*$/" placeholder="" name="licenseNo" class="form-control" ng-model="driver.licenseNo" ng-required="true">
+                                                   <div style="color:red" ng-show="driverProfileForm.licenseNo.$error.required && driverProfileForm.licenseNo.$touched">License number is required</div>
+                                                    <div style="color:red" ng-show="driverProfileForm.licenseNo.$error.pattern && driverProfileForm.licenseNo.$invalid">Special Character can't be taken</div>
+                                            </div>
+                                            <div class="form-group required">
+                                                <label>License Exp. Date</label>
+                                               
+                                             <div class="input-group"
+											     moment-picker="driver.driverLiscenceExpiryDate"
+											     format="DD/MM/YYYY"
+											     min-date="example.currentDate">
+											    <span class="input-group-addon">
+											        <i class="octicon octicon-calendar"></i>
+											    </span>
+											    <input  placeholder="" class="form-control"
+											           
+											           ng-model="driver.driverLiscenceExpiryDate"
+											           ng-model-options="{ updateOn: 'blur' }">
+											           
+											</div> 
+                                             
+                                            <!--  <datepicker date-format="dd/MM/yyyy">
+                                               <input placeholder="" name="driverLiscenceExpiryDate" class="form-control" 
+                                               ng-model="driver.driverLiscenceExpiryDate" 
+                                                 ng-required="true"></datepicker> -->
+                                               
+                                              
+                                          
+                                               
+                                                   <div style="color:red" ng-show="driverProfileForm.driverLiscenceExpiryDate.$error.required && driverProfileForm.driverLiscenceExpiryDate.$touched">DriverLiscenceExpiryDate is required</div>
+                                                   <div style="color:red" ng-show="driverProfileForm.driverLiscenceExpiryDate.$error.pattern && driverProfileForm.driverLiscenceExpiryDate.$invalid">Special Character can't be taken</div>
+                                            </div>
+                                            <div class="form-group required">
+                                                <label>License Issued Place</label>
+                                                <input type="text" no-special-char ng-pattern="/^[a-zA-Z0-9]*$/" placeholder="" name="licenseIssuedPlace" class="form-control" ng-model="driver.licenseIssuedPlace" ng-required="true">
+                                                   <div style="color:red" ng-show="driverProfileForm.licenseIssuedPlace.$error.required && driverProfileForm.licenseIssuedPlace.$touched">LicenseIssuedPlace is required</div>
+                                                   <div style="color:red" ng-show="driverProfileForm.licenseIssuedPlace.$error.pattern && driverProfileForm.licenseIssuedPlace.$invalid">Special Character can't be taken</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <center><div style="color:#009933">{{succsmessage}}</div></center>
+                                    <center><div style="color:#ff3300">{{errmessage}}</div></center>
+                                <div class="modal-footer">
+                                    <input type="submit" ng-show="!driver.id" ng-disabled="driverProfileForm.$invalid" class="btn btn-primary" value="Submit"/>
+                                    <input type="submit" ng-show="driver.id" ng-disabled="driverProfileForm.$invalid" class="btn btn-primary" value="Update"/>                                    
+                                </div>
+                            </div>
+                            </form>
+                            </div>
+                    </div>
+                   <!--Form Modals-->
+	<div id="form-dbm" tabindex="-1" role="dialog" class="modal fade">
+		<form name="driverbeaconForm" class="form"
+			ng-submit="saveDriverBeacon(driverbeacon.$valid);" novalidate>
+			<div class="modal-dialog custom-width">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" data-dismiss="modal" aria-hidden="true"
+							class="close md-close">
+							<span class="mdi mdi-close"></span>
+						</button>
+						<a href="#" class="close md-help"><span class="mdi mdi-help"></span></a>
+						<!--                                     <p class="modal-title">Driver - Beacon Mapping</p> -->
+						<p class="modal-title" ng-if="!driverbeacon.id">Add Driver Beacon</p>
+						<p class="modal-title" ng-if="driverbeacon.id">Update Driver Beacon</p>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-sm-12">
+								<p class="panel-heading panel-heading-divider">Basic Details</p>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group required">
+									<label>Employee ID</label> <!-- <input type="text" placeholder="" name="driverId" class="form-control" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="driverbeacon.driverID" ng-required="true">
+									<div style="color: red" ng-show="driverbeaconForm.driverId.$error.required && driverbeaconForm.driverId.$touched">DriverId is required</div>
+										<div style="color: red" ng-show="driverbeaconForm.driverId.$error.pattern && driverbeaconForm.driverId.$invalid">Enter valid Driver Id</div> -->
+										<select name="empId" class="form-control" ng-options="driverProfile.empId as driverProfile.empId for driverProfile in driverbeaconsdata.driverProfiles" ng-model="driverbeacon.empId" ng-change="fetchDriverByEmpId(driverbeacon.empId);" ng-required="true">
+										<option ng-show="!driverbeacon.id" value=''>Select driver by employee id</option>
+<!--  										<option ng-if="driverbeacon.id" value='driverbeacon.empID'>{{driverbeacon.empID}}</option> -->
+										</select>
+									</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group required">  <!-- ng-options="beacon.id as beacon.uuid for beacon in beacons track by beacon.id" -->
+									<label>Beacon ID</label> <select class="form-control" ng-options="beacon.uuid as beacon.uuid for beacon in driverbeaconsdata.beacons" ng-model="driverbeacon.driverId" name="driverId" ng-required="true">
+										<option ng-show="!driverbeacon.id" value=''>Select Beacon by beacon uuid</option>
+ 										<option ng-if="driverbeacon.id" value='driverbeacon.driverId'>{{driverbeacon.driverId}}</option>
+									</select>
+									<span
+										ng-show="driverbeaconForm.driverId.$error && driverbeaconForm.driverId.$touched && driverbeaconForm.driverId.$invalid
+                                                     || driverbeaconForm.$submitted && driverbeaconForm.driverId.$invalid">
+										<div style="color: red" ng-message="required">driverId
+											is required</div>
+									</span>
+									<!--                                                     <input type="text" placeholder="" class="form-control"> -->
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<p class="panel-heading panel-heading-divider">Personal
+									Details</p>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group required">
+									<label>First Name</label> <input type="text" no-special-char ng-readonly="driverbeacon.driverFirstName" ng-pattern="/^[a-zA-Z]*$/" name="firstName"  maxlength="15"
+										placeholder="" class="form-control"
+										ng-model="driverbeacon.driverFirstName" ng-required="true">
+									<span
+										ng-show="driverbeaconForm.firstName.$error && driverbeaconForm.firstName.$touched && driverbeaconForm.firstName.$invalid
+                                                     || driverbeaconForm.$submitted && driverbeaconForm.firstName.$invalid">
+										<div style="color: red" ng-message="required">First Name
+											is required</div>
+									</span>
+									<div style="color: red"
+										ng-show="driverbeaconForm.firstName.$error.pattern && driverbeaconForm.firstName.$invalid">Enter valid Driver Name</div>
+									
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group required">
+									<label>Last Name</label> <input type="text" ng-readonly="driverbeacon.driverLastName" no-special-char ng-pattern="/^[a-zA-Z0-9]*$/" name="lastName"  maxlength="15"
+										placeholder="" class="form-control"
+										ng-model="driverbeacon.driverLastName" ng-required="true"> <span
+										ng-show="driverbeaconForm.lastName.$error && driverbeaconForm.lastName.$touched && driverbeaconForm.lastName.$invalid
+                                                     || driverbeaconForm.$submitted && driverbeaconForm.lastName.$invalid">
+										<div style="color: red" ng-message="required">Last Name
+											is required</div>
+									</span>
+									<div style="color: red"
+										ng-show="driverbeaconForm.lastName.$error.pattern && driverbeaconForm.lastName.$invalid">Enter valid Last Name</div>
+									
+									
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group required">
+									<label>DOB</label>
+									<!--                                                     <input type="text" placeholder="" > -->
+									 <div class="input-group"
+											     moment-picker="driverbeacon.dateOfBirth"
+											     format="DD/MM/YYYY"
+											    ><input type="text" class="form-control datetimepicker"
+										 placeholder="" name="dob"
+										ng-model="driverbeacon.dateOfBirth" ng-required="true" ng-readonly="driverbeacon.dateOfBirth"></div>
+									<div style="color: red"
+										ng-show="driverbeaconForm.dob.$error.required && driverbeaconForm.dob.$touched">Date
+										of birth is required</div>
+									
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group required">
+									<label>Mine</label> <!-- <select class="form-control" name="mine"
+										ng-model="driverbeacon.mine" ng-required="true">
+										<option value="">--Select Mine--</option>
+											<option value="Jharsuguda">Jharsuguda</option>
+												<option value="Samaleswari">Samaleswari</option>
+
+										                                                        <option value="2">Samaleswari</option>
+									</select> -->
+									<input type="text" ng-readonly="driverbeacon.mine" name="mine"  
+										 class="form-control"
+										ng-model="driverbeacon.mine" ng-required="true">
+									<div style="color: red"
+										ng-show="driverbeaconForm.mine.$error.required && driverbeaconForm.mine.$touched">Mine
+										is required</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<center><div style="color:#009933">{{succsmessage}}</div></center>
+                                    <center><div style="color:#ff3300">{{errmessage}}</div></center>
+					<div class="modal-footer">
+						<input type="submit" ng-show="!driverbeacon.id"
+							ng-disabled="driverbeaconForm.$invalid" class="btn btn-primary"
+							value="Submit" /> <input type="submit" ng-show="driverbeacon.id"
+							ng-disabled="driverbeaconForm.$invalid" class="btn btn-primary"
+							value="Update" />
+							<!-- ng-disabled="driverbeaconForm.$invalid" -->
+					</div>
+		</form>
+	</div>
+</div>
+</div>
+</div>

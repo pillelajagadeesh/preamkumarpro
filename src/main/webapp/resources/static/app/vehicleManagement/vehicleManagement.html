@@ -1,0 +1,585 @@
+<!-- <div class="be-content"> -->
+
+ <div class="main-content container-fluid">
+<div class="panel panel-default panel-table">
+	<div class="tab-container">
+		<div class="tools">
+			<div class="col-sm-2 mine-select right-menu">
+				<!-- <select class="mines-select" ng-options="mine.mine as mine.mine for mine in mines">
+					<optgroup>
+						<option value="1">Mine 1</option>
+						<option value="2">Samaleswari</option>
+					</optgroup>
+				</select> -->
+				<select class="form-control" name="minefilter" ng-model="vehicle.minefilter" ng-options="mine.mine as mine.mine for mine in mines" ng-required="true">
+											    <option value="">Select Mine</option>
+<!-- 												<option value="Jharsuguda">Jharsuguda</option>
+												<option value="Samaleswari">Samaleswari</option> -->
+											
+										</select>
+
+			</div>
+		</div>
+		<ul class="nav nav-tabs nav-tabs-primary">
+			<li ng-class="{active: isSet(1)}"><a href ng-click="setTab(1);"
+				data-toggle="tab" aria-expanded="false"><span class="icon mdi"><img
+						src="assets/img/icons/tab/driver-profile.png" alt=""></span>Vehicle
+					Profile</a></li>
+			<!-- href="#vehi-profile" -->
+			<li ng-class="{active: isSet(2)}"><a href ng-click="setTab(2);"
+				data-toggle="tab" aria-expanded="false"><span class="icon mdi"><img
+						src="assets/img/icons/tab/vehicle-surf-mapping.png" alt=""></span>Vehicle
+					- Serfs Mapping</a></li>
+			<!-- href="#vehi-mapping" -->
+		</ul>
+
+		<div class="tab-content">
+			<div id="vehi-profile" ng-show="isSet(1)" class="tab-pane active">
+				<!-- class="tab-pane active" -->
+				<div class="row">
+					<div class="page-title">
+						<div class="col-sm-3">
+							<div class="input-group">
+								<input placeholder="Search.." class="form-control search-input" ng-model="text" ng-change="searchVehicle(text);"
+									type="text">
+							</div>
+						</div>
+						<div class="col-sm-2 pull-right text-right action-icons">
+							<!-- <button class="btn btn-space btn-social btn-color btn-success"
+										data-toggle="modal" data-target="#form-vadd">
+										<i class="icon icon-left mdi mdi-plus"></i>
+										<img src="assets/img/icons/tab/add.png" alt="">
+									</button> -->
+							<a href="" class="" data-toggle="modal" data-target="#form-vadd" ng-click="addOrEditVehicleProfile(undefined);"><img
+								src="assets/img/icons/tab/add.png" title="Add" alt=""></a>
+						</div>
+					</div>
+				</div>
+
+				<table
+					class="table table-condensed table-striped table-bordered table-inverted">
+					<thead>
+						<tr>
+							<th>Vehicle No</th>
+							<th>Vehicle Type</th>
+							<th>Serf Name</th>
+							<th>Contractor Name</th>
+							<th>Contract Exp. Date</th>
+							<th>Make</th>
+							<th>Role</th>
+							<th>Vehicle Door No</th>
+							<th>Fuel Level</th>
+							<th>KM Driven</th>
+							<th>Insurance Exp. Date</th>
+							<th>Current Status</th>
+							<th class="text-center"><img
+								src="assets/img/icons/table/edit.png" alt=""></th>
+							<!-- <th class="actions"><i class="icon mdi mdi-edit"></i></th> -->
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="vehicle in vehicles">
+							<td>{{::vehicle.vehicleNo}}</td>
+							<td>{{::vehicle.vehicleModel}}</td>
+							<td>{{::vehicle.serfName}}</td>
+							<td>{{::vehicle.contractAgency}}</td>
+							<td>{{::vehicle.contractExpiryDate}}</td>
+							<td>{{::vehicle.make}}</td>
+							<td>{{::vehicle.roleType}}</td>
+							<td>{{::vehicle.vehicleDoorNo}}</td>
+							<td>{{::vehicle.fuelLevel}}</td>
+							<td>{{::vehicle.kmDriven}}</td>
+							<td>{{::vehicle.insuranceExpiryDate}}</td>
+							<td>{{::vehicle.vehicleStatus}}</td>
+							 <!-- <td><img ng-src="{{vehicle.vehicleStatus == 'ACTIVE' && 'assets/img/icons/misc/active.png' || 'assets/img/icons/misc/status-inactive.png'}}"/></td> -->
+
+							<!-- <td class="actions"><button type="button"
+											class="btn btn-space btn-default btn-social"
+											data-toggle="modal" data-target="#form-vadd"
+											ng-click="addOrEditVehicleProfile(vehicle);">
+											<img src="assets/img/icons/tab/edit.png" alt="">
+										</button></td> -->
+							<td class="actions"><a href="" placeholder="edit"
+								data-toggle="modal" data-target="#form-vadd"
+								ng-click="addOrEditVehicleProfile(vehicle);"><img
+									src="assets/img/icons/tab/edit.png" title="Edit" alt=""></a></td>
+							<!--  <td class="actions"><a href="#"><img src="assets/img/icons/tab/edit.png" alt=""></a></td> -->
+						</tr>
+					</tbody>
+				</table>
+				 <div class="row">
+                                        <div class="col-sm-6">
+                                          <p class="pagination-text" ng-cloak>Showing {{(size*(page-1))+1}} to {{(size*page)-(size-numberOfElements)}} of {{totalElements}} entries</p>
+                                        </div>
+                                        <div class="col-sm-6 text-right">
+                                            <nav>
+                                                <!-- <ul class="pagination">
+                                                    <li><a href="#" aria-label="Previous"><span aria-hidden="true" class="mdi mdi-chevron-left"></span></a></li>
+                                                    <li class="active"><a href="#">1</a></li>
+                                                    <li><a href="#">2</a></li>
+                                                    <li><a href="#">3</a></li>
+                                                    <li><a href="#">4</a></li>
+                                                    <li><a href="#">5</a></li>
+                                                    <li><a href="#">6</a></li>
+                                                    <li><a href="#">7</a></li>
+                                                    <li><a href="#" aria-label="Next"><span aria-hidden="true" class="mdi mdi-chevron-right"></span></a></li>
+                                                </ul> -->
+                                                <ul><paging href="" page="page"
+                                                page-size="size"
+                                                total="totalElements"
+                                                 show-prev-next="true"
+                                                show-first-last="true"
+                                                paging-action="vehiclePageChanged(page)">
+                                                </paging></ul>                                                
+                                            </nav>
+                                        </div>
+                                    </div>
+			</div>
+                                <div id="vehi-mapping" ng-show="isSet(2)"><!-- class="tab-pane cont" -->
+                                    <div class="row">
+                                        <div class="page-title">
+                                            <div class="col-sm-3">
+                                                <div class="input-group">
+                                                    <input placeholder="Search.." class="form-control search-input" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 pull-right text-right action-icons">
+                                                <a href="" class="" data-toggle="modal" data-target="#form-vsm" ng-click="addOrEditVehicleSerf(undefined);">
+                                                <img src="assets/img/icons/tab/add.png" title="Add" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table class="table table-condensed table-striped table-bordered table-inverted">
+                                        <thead>
+                                            <tr>
+                                                <th>Mine</th>
+                                                <th>Vehicle No</th>
+                                                <th>Vehicle Type</th>
+                                                <th>Vehicle Make</th>
+                                                <th>Serfs Name</th>
+                                                <th class="text-center"><img src="assets/img/icons/table/edit.png" alt=""></th>
+                                               <!--  <th class="text-center"><img src="assets/img/icons/table/update.png" alt=""></th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="vehicleserf in vehicleserfs"><!-- ng-if="vehicle.serfName" -->
+                                                <td>{{::vehicleserf.mine}}</td>
+                                                <td>{{::vehicleserf.vehicleNo}}</td>
+                                                <td>{{::vehicleserf.vehicleModel}}</td>
+                                                <td>{{::vehicleserf.make}}</td>
+                                                <td>{{::vehicleserf.serfName}}</td>
+                                                <td class="actions"><a href="#" data-toggle="modal" data-target="#form-vsm" ng-click="addOrEditVehicleSerf(vehicleserf);"> 
+                                                <img src="assets/img/icons/tab/edit.png" title="Edit" alt=""></a></td>
+                                               <!--  <td class="actions"><a href="#"><img src="assets/img/icons/tab/update.png" alt=""></a></td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                          <p class="pagination-text" ng-cloak>Showing {{(size*(page-1))+1}} to {{(size*page)-(size-numberOfElements)}} of {{totalElements}} entries</p>
+                                        </div>
+                                        <div class="col-sm-6 text-right">
+                                            <nav>
+                                                <!-- <ul class="pagination">
+                                                    <li><a href="#" aria-label="Previous"><span aria-hidden="true" class="mdi mdi-chevron-left"></span></a></li>
+                                                    <li class="active"><a href="#">1</a></li>
+                                                    <li><a href="#">2</a></li>
+                                                    <li><a href="#">3</a></li>
+                                                    <li><a href="#">4</a></li>
+                                                    <li><a href="#">5</a></li>
+                                                    <li><a href="#">6</a></li>
+                                                    <li><a href="#">7</a></li>
+                                                    <li><a href="#" aria-label="Next"><span aria-hidden="true" class="mdi mdi-chevron-right"></span></a></li>
+                                                </ul> -->
+                                                <ul><paging href="" page="page"
+                                                page-size="size"
+                                                total="totalElements"
+                                                 show-prev-next="true"
+                                                show-first-last="true"
+                                                paging-action="vehicleSerfPageChanged(page)">
+                                                </paging></ul>                                                
+ 
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+		</div>
+	</div>
+</div>
+<!--Form Modals-->
+<div id="form-vadd" tabindex="-1" role="dialog" class="modal fade">
+	<div class="modal-dialog full-width">
+		<form name="vehicleForm" ng-submit="save(vehicle.$valid);" novalidate>
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" data-dismiss="modal" aria-hidden="true"
+						class="close md-close">
+						<span class="mdi mdi-close"></span>
+					</button>
+					<p class="modal-title" ng-if="!vehicle.id">Add Vehicle</p>
+					<p class="modal-title" ng-if="vehicle.id">Update Vehicle</p>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="row">
+								<div class="col-sm-12">
+									<p class="panel-heading panel-heading-divider">Basic
+										Details</p>
+								</div>
+								<div class="col-sm-4">
+									<div class="form-group required">
+										<label>Mine</label> <!-- <input type="text" class="form-control"
+											name="mine" ng-model="vehicle.mine" ng-required="true"> -->
+										<select class="form-control" name="mine" ng-options="mine.mine as mine.mine for mine in mines" ng-model="vehicle.mine" ng-required="true">
+											
+											<option value="">--Select Mine--</option>
+												<!-- <option value="Jharsuguda">Jharsuguda</option>
+												<option value="Samaleswari">Samaleswari</option> -->
+											
+										</select>
+
+										<div style="color: red"
+											ng-show="vehicleForm.mine.$error.required && vehicleForm.mine.$touched">Mine
+											is required</div>
+									</div>
+								</div>
+<!-- 								<div class="col-sm-4">
+									<div class="form-group required">
+										<label>Serf ID</label> <input type="text" no-special-char ng-pattern="/^[a-fA-F0-9]*$/" placeholder=""
+											class="form-control" name="serfId" maxlength="32" ng-model="vehicle.serfId"
+											ng-required="true">
+										<div style="color: red"
+											ng-show="vehicleForm.serfId.$error.required && vehicleForm.serfId.$touched">SerfId
+											is required</div>
+											
+											<div style="color: red"
+											ng-show="vehicleForm.serfId.$error.pattern && vehicleForm.serfId.$invalid">Enter valid Serf Id</div>
+											
+									</div>
+								</div> -->
+								<div class="col-sm-4">
+									<div class="form-group required">
+										<label>Status</label> <select class="form-control"
+											name="status" ng-model="vehicle.vehicleStatus" ng-required="true">
+											<option value="">--Select Vehicle Status--</option>
+											<option value="ACTIVE">ACTIVE</option>
+											<option value="INACTIVE">INACTIVE</option>
+											
+										</select>
+										<div style="color: red"
+											ng-show="vehicleForm.status.$error.required && vehicleForm.status.$touched">Status
+											is required</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="row">
+								<div class="col-sm-12">
+									<p class="panel-heading panel-heading-divider">Role</p>
+								</div>
+								<div class="col-sm-4">
+									<div class="form-group required">
+										<label>Type</label> 
+										<select class="form-control"
+											name="roleType" ng-model="vehicle.roleType"
+											ng-required="true">
+											<option value="">Select vehicle role</option>
+											<option value="PERMANENT">PERMANENT</option>
+											<option value="CONTRACT">CONTRACT</option>
+										</select>
+										<div style="color: red" ng-show="vehicleForm.roleType.$error.required && vehicleForm.roleType.$touched">Role type is required</div>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="form-group required">
+										<label>Contract Agency</label>
+										<!--  <input type="text" placeholder="" class="form-control" name="contractAgency" ng-model="vehicle.contractAgency" ng-required="true"> -->
+
+
+										<input type="text" no-special-char ng-if="!vehicle.id"
+											ng-disabled="vehicle.roleType == 'PERMANENT'"
+											ng-pattern="/^[a-zA-Z0-9]*$/" placeholder=""
+											name="contractAgency" class="form-control"
+											ng-model="vehicle.contractAgency"
+											ng-required="vehicle.roleType == 'CONTRACT' && !vehicle.id">
+										<input type="text"
+											ng-if="vehicle.id && vehicle.roleType == 'PERMANENT'"
+											ng-pattern="/^[a-zA-Z0-9]*$/"
+											ng-disabled="vehicle.roleType == 'PERMANENT'" placeholder=""
+											name="contractAgency" class="form-control"> <input
+											type="text"
+											ng-if="vehicle.id && vehicle.roleType == 'CONTRACT'"
+											ng-pattern="/^[a-zA-Z0-9]*$/"
+											ng-disabled="vehicle.roleType == 'PERMANENT'" placeholder=""
+											name="contractAgency" class="form-control"
+											ng-model="vehicle.contractAgency"
+											ng-required="vehicle.roleType == 'CONTRACT' && vehicle.id">
+										<!--                                                  <input type="text" ng-hide="!driver.id && " ng-disabled="driver.driverRole == 'PERMANENT'" placeholder="" name="contractAgency" class="form-control" ng-model="driver.contractAgency" ng-required="driver.driverRole == 'CONTRACT'"> -->
+										<!-- <div style="color:red" ng-show="driverProfileForm.contractAgency.$error.required && driverProfileForm.contractAgency.$touched">ContractAgency is required</div>
+                                                    <div style="color:red" ng-show="driverProfileForm.contractAgency.$error.pattern && driverProfileForm.contractAgency.$invalid">Special Character can't be taken</div> 
+                                                    -->
+
+										<div style="color: red"
+											ng-show="vehicleForm.contractAgency.$error.required && vehicleForm.contractAgency.$touched">ContractAgency
+											is required</div>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="form-group required">
+										<label>Contract Exp. Date</label>
+										<!--  <input type="text" placeholder="" class="form-control" name="contractExpiryDate" ng-model="vehicle.contractExpiryDate" ng-required="true"> -->
+<!-- <input data-min-view="2" data-date-format="dd-mm-yyyy"  type="text" placeholder="" class="form-control date-widget"> -->
+										<div class="input-group"
+											     moment-picker="vehicle.contractExpiryDate"
+											     format="DD/MM/YYYY"
+											     min-date="example.currentDate"><input type="text" placeholder="" class="form-control" ng-if="!vehicle.id"
+											ng-disabled="vehicle.roleType == 'PERMANENT'" placeholder=""
+											 name="contractExpiryDate"
+											ng-model="vehicle.contractExpiryDate"
+											ng-required="vehicle.roleType == 'CONTRACT' && !vehicle.id "></div>
+											
+									<div class="input-group"
+											     moment-picker="vehicle.contractExpiryDate"
+											     format="DD/MM/YYYY"
+											     min-date="example.currentDate">	<input   type="text" placeholder="" class="form-control"
+											ng-if="vehicle.id && vehicle.roleType == 'PERMANENT'"
+											ng-disabled="vehicle.roleType == 'PERMANENT'" placeholder=""
+											name="contractExpiryDate"></div>
+											
+									<div class="input-group"
+											     moment-picker="vehicle.contractExpiryDate"
+											     format="DD/MM/YYYY"
+											     min-date="example.currentDate">	<input	  type="text" placeholder="" class="form-control"
+											ng-if="vehicle.id && vehicle.roleType == 'CONTRACT'"
+											ng-disabled="vehicle.roleType == 'PERMANENT'" placeholder=""
+											name="contractExpiryDate" 
+											ng-model="vehicle.contractExpiryDate"
+											" ng-required="vehicle.roleType == 'CONTRACT' && vehicle.id"></div>
+
+
+										<div style="color: red"
+											ng-show="vehicleForm.contractExpiryDate.$error.required && vehicleForm.contractExpiryDate.$touched">ContractExpiryDate
+											is required</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<p class="panel-heading panel-heading-divider">Vehicle
+								Details</p>
+						</div>
+						<div class="col-sm-2">
+						<!-- <label  ng-if="vehicle.vehicleNo">Vehicle No : {{vehicle.vehicleNo}}</label> -->
+							<div class="form-group required">
+								<label>Vehicle Number</label> <input type="text" no-special-char ng-pattern="/^[a-zA-Z0-9]*$/" placeholder=""
+									class="form-control" name="vehicleNo"
+									ng-model="vehicle.vehicleNo" ng-required="true">
+								<div style="color: red"
+									ng-show="vehicleForm.vehicleNo.$error.required && vehicleForm.vehicleNo.$touched">Vehiclenumber
+									is required</div>
+									
+									<div style="color: red"
+									ng-show="vehicleForm.vehicleNo.$error.pattern && vehicleForm.vehicleNo.$invalid">Enter Valid Vehicle Number</div>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="form-group required">
+								<label>Model</label> <input type="text" no-special-char ng-pattern="/^[a-zA-Z0-9]*$/" placeholder=""
+									class="form-control" name="vehicleModel"
+									ng-model="vehicle.vehicleModel" ng-required="true">
+								<div style="color: red"
+									ng-show="vehicleForm.vehicleModel.$error.required && vehicleForm.vehicleModel.$touched">Vehicle
+									Model is required</div>
+									<div style="color: red"
+									ng-show="vehicleForm.vehicleModel.$error.pattern && vehicleForm.vehicleModel.$required">Enter valid Model</div>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="form-group required">
+								<label>Make</label> <input type="text" no-special-char ng-pattern="/^[a-zA-Z0-9]*$/" placeholder=""
+									class="form-control" name="make" ng-model="vehicle.make"
+									ng-required="true">
+								<div style="color: red"
+									ng-show="vehicleForm.make.$error.required && vehicleForm.make.$touched">Make
+									is required</div>
+									<div style="color: red"
+									ng-show="vehicleForm.make.$error.pattern && vehicleForm.make.$invalid">Enter valid value</div>
+							</div>
+						</div>
+						<div class="col-sm-2">
+							<div class="form-group required">
+								<label>Registration Year</label><input type="text" no-special-char
+									placeholder="" class="form-control" name="registrationYear"
+									ng-model="vehicle.registrationYear" ng-required="true">
+								<div style="color: red"
+									ng-show="vehicleForm.registrationYear.$error.required && vehicleForm.registrationYear.$touched">Registration
+									year is required</div>
+							</div>
+						</div>
+						<div class="col-sm-2">
+							<div class="form-group required">
+								<label>Vehicle Door No.</label><input type="text" no-special-char
+									placeholder="" class="form-control" name="vehicleDoorNo"
+									ng-model="vehicle.vehicleDoorNo" ng-required="true">
+								<div style="color: red"
+									ng-show="vehicleForm.vehicleDoorNo.$error.required && vehicleForm.vehicleDoorNo.$touched">vehicleDoorNo
+									 is required</div>
+							</div>
+						</div>
+						<!-- <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label>Insurance Exp. Date</label>
+                                            <input type="text" placeholder="" class="form-control" name="insuranceExpiryDate" ng-model="vehicle.insuranceExpiryDate" ng-required="true">
+                                        </div>
+                                    </div> -->
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="row">
+								<div class="col-sm-12">
+									<p class="panel-heading panel-heading-divider">Insurance
+										Details</p>
+								</div>
+								<div class="col-sm-4">
+									<div class="form-group required">
+										<label>Insurance Provider</label> <input type="text" no-special-char ng-pattern="/^[a-zA-Z]*$/"
+											placeholder="" class="form-control" name="insuranceProvider"
+											ng-model="vehicle.insuranceProvider" ng-required="true">
+										<div style="color: red"
+											ng-show="vehicleForm.insuranceProvider.$error.required && vehicleForm.insuranceProvider.$touched">InsuranceProvider
+											is required</div>
+											<div style="color: red"
+											ng-show="vehicleForm.insuranceProvider.$error.pattern && vehicleForm.insuranceProvider.$invalid">Enter valid Name</div>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="form-group required">
+										<label>Insurance Exp. Date</label> 
+										<div class="input-group"
+											     moment-picker="vehicle.insuranceExpiryDate"
+											     format="DD/MM/YYYY"
+											     min-date="example.currentDate">
+										<input type="text" class="form-control"
+											placeholder="" 
+											name="insuranceExpiryDate"
+											ng-model="vehicle.insuranceExpiryDate" ng-required="true" readonly></div>
+											
+											
+										<div style="color: red"
+											ng-show="vehicleForm.insuranceExpiryDate.$error.required && vehicleForm.insuranceExpiryDate.$touched">InsuranceExpiryDate
+											is required</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					<center><div ng-show="succsmessage" style="color:#009933 ">{{succsmessage}}</div></center>
+                           <center><div ng-show="errmessage" style="color:#ff3300 ">{{errmessage}}</div></center>
+					<div class="modal-footer">
+						<input type="submit" ng-show="!vehicle.id" ng-disabled="vehicleForm.$invalid" class="btn btn-primary" value="Submit"> 
+						<input type="submit" ng-show="vehicle.id" ng-disabled="vehicleForm.$invalid" class="btn btn-primary" value="Update">
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+                <!--Form Modals-->
+                <div id="form-vsm" tabindex="-1" role="dialog" class="modal fade">
+                        <div class="modal-dialog custom-width">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close md-close"><span class="mdi mdi-close"></span></button>
+                                    <a href="#" class="close md-help"><span class="mdi mdi-help"></span></a>
+                                    <p class="modal-title" >Add or Update Vehicle - Serf Mapping</p>
+<!--                                     <p class="modal-title" ng-if="vehicleserf.id">Update Vehicle - Serf Mapping</p> -->
+                                </div>
+                                <form name="vehicleserfForm" ng-submit="saveVehicleSerf(vehicleserf.$valid);" novalidate>
+                                <div class="modal-body">
+                                    <div class="row">
+                                            <div class="col-sm-12">
+                                                <p class="panel-heading panel-heading-divider">Basic Details</p>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group required">
+                                                    <label>Vehicle Number</label>
+<!--                                                     <input type="text" no-special-char ng-pattern="/^[a-zA-Z0-9]*$/" placeholder=""
+									class="form-control" name="vehicleNo" ng-model="vehicleserf.vehicleNo" ng-required="true"> -->
+<!-- 										<select name="driverId" ng-options="vehicle.vehicleNo as vehicle.vehicleNo for vehicle in vehicles" placeholder=""
+									class="form-control" name="vehicleNo" ng-model="vehicleserf.vehicleNumber" ng-required="true">
+										<option ng-show="!vehicleserf.id" value="">Select vehicle by vehicle No</option>
+										<option ng-if="vehicleserf.vehicleNo" value='vehicleserf.vehicleNo'>{{vehicleserf.vehicleNo}}</option>
+										</select> -->
+										<select name="driverId" ng-options="vehicleProfile.vehicleNo as vehicleProfile.vehicleNo for vehicleProfile in vehicleSerfs.vehicleProfiles" placeholder=""
+									class="form-control" name="vehicleNo" ng-model="vehicleserf.vehicleNo" ng-change="fetchVehicleByVehicleNo(vehicleserf.vehicleNo);" ng-required="true">
+										<option ng-show="!vehicleserf.id" value="">Select vehicle by vehicle No</option>
+<!-- 										<option ng-if="vehicleserf.vehicleNo" value='vehicleserf.vehicleNo'>{{vehicleserf.vehicleNo}}</option> -->
+										</select>										
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-sm-6">
+                                                <div class="form-group required">
+                                                    <label>Serfs Name</label>
+<!--                                                     <select name="serfsId" ng-options="serf.deviceName as serf.deviceName for serf in serfs" placeholder=""
+									class="form-control" ng-model="vehicleserf.serfsId" ng-required="true">
+                                                        <option ng-show="!vehicleserf.id" value="">Select serf id by device name</option>
+                                                        <option ng-if="vehicleserf.serfsId" value="vehicleserf.serfsId">{{vehicleserf.serfsId}}</option>
+                                                    </select> -->
+                                                    <select name="serfsId" ng-options="serfBoard.deviceName as serfBoard.deviceName for serfBoard in vehicleSerfs.serfBoards" placeholder=""
+									class="form-control" ng-model="vehicleserf.serfsName" ng-required="true">
+                                                        <option ng-show="!vehicleserf.id" value="">Select serf id by device name</option>
+<!--                                                         <option ng-if="vehicleserf.serfsId" value="vehicleserf.serfsId">{{vehicleserf.serfsId}}</option> -->
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <p class="panel-heading panel-heading-divider">Vehicle Details</p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group required">
+                                                    <label>Mine</label>
+                                                   <!--  <select class="form-control" name="mine" placeholder="" ng-model="vehicleserf.mine" ng-required="true">
+                                                        <option ng-show="!vehicleserf.mine" value="">-- Select mine --</option>
+                                                        <option value="Jharsuguda">Jharsuguda</option>
+                                                        <option value="Samaleswari">Samaleswari</option>
+                                                    </select> -->
+                                                    <input type="text" class="form-control" name="mine" ng-readonly="vehicleserf.mine" ng-model="vehicleserf.mine" ng-required="true">
+     								<div style="color: red" ng-show="vehicleserfForm.mine.$error.required && vehicleserfForm.mine.$touched">Mine is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group required">
+                                                    <label>Vehicle Type</label>
+                                                    <input type="text" no-special-char ng-pattern="/^[a-zA-Z0-9]*$/" placeholder="" class="form-control" name="vehicleType" ng-readonly="vehicleserf.vehicleModel" ng-model="vehicleserf.vehicleModel" ng-required="true">
+     								<div style="color: red" ng-show="vehicleserfForm.vehicleType.$error.required && vehicleserfForm.vehicleType.$touched">Vehicle Type is required</div>
+									<div style="color: red" ng-show="vehicleserfForm.vehicleType.$error.pattern && vehicleserfForm.vehicleType.$required">Enter valid vehicle type</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group required">
+                                                    <label>Vehicle Make</label>
+                                                    <input type="text" no-special-char ng-pattern="/^[a-zA-Z0-9]*$/" placeholder="" class="form-control" name="vehicleMake" ng-readonly="vehicleserf.make" ng-model="vehicleserf.make" ng-required="true">
+          	    							<div style="color: red" ng-show="vehicleserfForm.vehicleMake.$error.required && vehicleserfForm.vehicleMake.$touched">Vehicle Make is required</div>
+		       							      <div style="color: red" ng-show="vehicleserfForm.vehicleMake.$error.pattern && vehicleserfForm.vehicleMake.$invalid">Enter valid vehicle make</div>
+                                                </div>
+                                             </div>
+                                    </div>
+                                </div>
+                                <center><div ng-show="succsmessage" style="color:#009933 ">{{succsmessage}}</div></center>
+                           <center><div ng-show="errmessage" style="color:#ff3300 ">{{errmessage}}</div></center>
+                                <div class="modal-footer">
+						<input type="submit" ng-disabled="vehicleserfForm.$invalid" class="btn btn-primary" value="Submit">
+<!-- 						<input type="submit" ng-show="vehicleserf.id" ng-disabled="vehicleserfForm.$invalid" class="btn btn-primary" value="Update"> -->
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+</div>
+<!-- </div> -->

@@ -1,0 +1,32 @@
+  
+                      <div class="panel panel-default">
+                         <div class="tab-container">
+                             <ul class="nav nav-tabs nav-tabs-primary">
+                                <li ng-class="{active: isSet(1)}"><a href ng-click="setTab(1);" data-toggle="tab" aria-expanded="false">
+                                <span class="icon mdi mdi-settings"></span>Lajkura</a></li><!-- href="#mine-1"  Jharsuguda -->
+                                
+<!--                                  <li class=""><a href="#mine-2" data-toggle="tab" aria-expanded="false"><span class="icon mdi mdi-settings"></span>Samaleswari</a></li> -->
+                             
+                              <!-- <li><a href class="close md-help"><span class="mdi mdi-help"></span></a>
+                                <span class="glyphicon"><a href ng-click="refresh();">&#xe031;</a></span></li> -->
+                              
+                              
+                             <!--  <li> <a href class="close md-help"><span class="mdi mdi-help"></span></a> 
+                               </li> -->
+                              
+                              
+                               <li><!-- <a href class="close md-help"><span class="mdi mdi-help"></span></a> -->
+                               <span class="glyphicon"> <a href class="close" ng-click="refresh();">  <!-- &#xe031;  -->
+                               <img src="assets/img/icons/refresh.png">
+                             
+                              
+                               </a> </span> 
+                               </li>
+                              </ul>
+                             <div class="tab-content panel-body-contrast"> <!-- class="tab-content panel-body-contrast" -->
+                                  <div id="mine-1" ng-show="isSet(1)">   <!-- class="tab-pane active" --><!-- models="vm.randomMarkers" idKey="idKey" events="map.markersEvents" idKey="idKey" coords="'self'"-->
+                                 <div id="map" style="height:500px; width:100%"></div>
+                                  </div>
+                         </div>
+                     </div>
+                     </div>

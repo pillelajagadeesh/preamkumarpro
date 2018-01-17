@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="AppRaamLabsLogin">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+<script src="angular/angular.js"></script>
+<script src="angular/angular-route.js"></script>
+<script src="angular/angular-resource.js"></script>
+ <script src="angular/angular-animate.js"></script>
+<script src="angular/angular-sanitize.js"></script>
+<script src="angular/angular-touch.js"></script>
+<script src="angular/angular-paging.js"></script>
+<script src="angular/angular-cookies.js"></script>
+</head>
+<body ng-controller="LoginController">
+<form name="loginForm" ng-submit="login(user);">
+    <center>
+        <h1>
+            <b><u>User Login</u></b>
+        </h1>
+        <hr>
+        
+<!--             <table>
+                <b>
+                    <tr>
+                        <td>User ID<font color="red">*</font></td>
+                        <td><input type="text" name="id"></td>
+                    </tr> <br>
+                    <tr>
+                        <td>Password<font color="red">*</font></td>
+                        <td><input type="password" name="password"></td>
+                    </tr> <br>
+                    <tr>
+                        <td><input type="submit" value="login""></td>
+                        <td><input type="reset" value="Reset">
+                    </tr>
+                </b>
+            </table> -->
+            	<div class="form-group">
+					  <div class="col-sm-12">
+						<input type="text" class="form-control" name="username" ng-model="user.userName" placeholder="Username" required>
+						<div ng-if="loginForm.username.$dirty && loginForm.username.$invalid"><span>Enter Username</span></div>
+					  </div>
+					</div>
+					<div class="form-group">
+					 
+					  <div class="col-sm-12">
+						<input type="password" class="form-control" name="password" ng-model="user.password" placeholder="Password" required>
+                        <div ng-if="loginForm.password.$dirty && loginForm.password.$invalid"><span>Enter Password</span></div>
+					  </div>
+					</div>
+					<div class="form-group">
+					  <div class="col-sm-12 ">
+						<input type="submit" value="Login"></input>
+					  </div>
+					</div>
+					<span ng-show="loginsuccess" style="color: green">{{loginsuccess}}</span>
+					<span ng-show="loginerror" style="color: red">{{loginerror}}</span>
+        <br>
+        <hr>
+        <hr>
+    </center>
+        </form>
+          <script src="./app/index.js"></script>
+    <script src="./app/indexCtrl.js"></script>
+      <script src="./app/indexService.js"></script>
+      
+    <script src="./login.js"></script>
+	<script src="./loginCtrl.js"></script>
+	<script src="./loginService.js"></script>
+    <script src="./app/constants/loginAppConstants.js"></script>
+    
+</body>
+</html>

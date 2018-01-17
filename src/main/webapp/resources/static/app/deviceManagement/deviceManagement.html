@@ -1,0 +1,115 @@
+<div ng-controller="DeviceManagementController">
+
+<h2>Device Management</h2>
+
+<!-- Trigger/Open The Modal -->
+<button>
+<md-button class="md-primary md-raised" ng-click="showAdvanced($event)">Open Dialog</md-button>
+</button>
+<table border="1">
+<tr>
+<th>UID</th>
+<th>MacID</th>
+<th>Mine</th>
+<th>Upload Time</th>
+<th>OBD Protocol</th>
+<th>Sync Time</th>
+<th>FTP URL</th>
+<th>User Name</th>
+<th>Password</th>
+<th>GPRS Conn</th>
+<th><button id="myBtn">Add</button></th>
+</tr>
+<tr ng-repeat="serf in serfs">
+    <td>{{ serf.uuid }}</td>
+    <td>{{ serf.macId }}</td>
+    <td>{{ serf.mineId}}</td>
+    <td>{{ serf.uploadTime }}</td>
+    <td>{{ serf.obdProtocol }}</td>
+    <td>{{ serf.createdDate }}</td>
+    <td>{{ serf.ftpUrl }}</td>
+    <td>{{ serf.userName }}</td>
+    <td>{{ serf.password}}</td>    
+    <td>{{ serf.gprsConnection }}</td>
+</tr>
+</table>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form class="login" ng-submit="save(serf)"> <!-- onsubmit='onSubmit(this)' -->
+    <center><h2>Enter Device Configuration Details</h2></center>
+    <table align="center"><tr>
+                        <td>UID<font color="red">*</font></td>
+                        <td><input type="text" name="uuid" ng-model="serf.uuid"></td>
+                    </tr>
+                    <tr>
+                        <td>MacID<font color="red">*</font></td>
+                        <td><input type="text" ng-model="serf.macId" name="macId"></td>
+                    </tr> 
+                    <tr>
+                        <td>Mine<font color="red">*</font></td>
+                        <td><input type="text" ng-model="serf.mineId" name="mineId"></td>
+                    </tr> 
+                    <tr>
+                        <td>Upload Time<font color="red">*</font></td>
+                        <td><input type="text" ng-model="serf.uploadTime" name="uploadTime"></td>
+                    </tr> 
+                    <tr>
+                        <td>OBD Protocol<font color="red">*</font></td>
+                        <td><input type="text" ng-model="serf.obdProtocol" name="obdProtocol"></td>
+                    </tr> 
+                    <tr>
+                        <td>Sync Time<font color="red">*</font></td>
+                        <td><input type="text" ng-model="serf.createdDate" name="createdDate"></td>
+                    </tr> 
+                    <tr>
+                        <td>FTP URL<font color="red">*</font></td>
+                        <td><input type="text" ng-model="serf.ftpUrl" name="ftpUrl"></td>
+                    </tr> 
+                    <tr>
+                        <td>User Name<font color="red">*</font></td>
+                        <td><input type="text" ng-model="serf.userName" name="userName"></td>
+                    </tr> 
+                    <tr>
+                        <td>Password<font color="red">*</font></td>
+                        <td><input type="text" ng-model="serf.password" name="password"></td>
+                    </tr> 
+                    <tr>
+                        <td>GPRS Conn<font color="red">*</font></td>
+                        <td><input type="text" ng-model="serf.gprsConnection" name="gprsConnection"></td>
+                    </tr> </table><br>
+                    
+                   
+                        
+                        <center><input type="submit" value="submit"></center>
+                        </form>
+                    
+  </div>
+
+</div>
+
+<!-- <script>
+
+$.get('https://api.mlab.com/api/1/databases/tollplus/collections/serfs?apiKey=nKb7MfbwOct6o0Kvb27ca7e3nFLi1DXv',
+			             function(responseText) {
+                        console.log(responseText);
+                     	});	 
+				
+function onSubmit( form ){
+  //var data = JSON.stringify( $(form).serializeArray() );
+		console.log($(form).serialize());
+		var formDate
+	var json = "{"+"UDID :"+$("form.uid").serialize()+"}";
+	console.log(document.getElementById('uid').value);
+		
+  //console.log("JSOSN :: "+JSON.stringify(json));
+  //return false; //don't submit
+}
+				
+
+</script> -->
+</div>

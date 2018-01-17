@@ -1,0 +1,784 @@
+<div class="main-content container-fluid">
+                    <div class="panel panel-default panel-table">
+                        <div class="tools">
+                            <div class="col-sm-2 mine-select right-menu">
+                                <!-- <select class="mines-select" ng-options="mine.mine as mine.mine for mine in mines">
+                                    <option value="1">Mine1</option>
+                                    <option value="2">Samaleswari</option>
+                                </select> -->
+                                <select class="form-control" name="minefilter" ng-model="serf.minefilter" ng-options="mine.mine as mine.mine for mine in mines" ng-required="true">
+											    <option value="">Select Mine</option>
+<!-- 												<option value="Jharsuguda">Jharsuguda</option>
+												<option value="Samaleswari">Samaleswari</option> -->
+											
+										</select>
+                            </div>
+                        </div>
+                        <div class="tab-container">
+                            <ul class="nav nav-tabs nav-tabs-primary">
+                                <li ng-class="{active: isSet(1)}"><a href ng-click="setTab(1);" data-toggle="tab" aria-expanded="false"><span class="icon mdi"><img src="assets/img/icons/tab/serfs.png" alt=""></span>Serfs</a></li>
+                                <li ng-class="{active: isSet(2)}"><a href ng-click="setTab(2);" data-toggle="tab" aria-expanded="false"><span class="icon mdi"><img src="assets/img/icons/tab/waypoint-beacon.png" alt=""></span>Way Point Beacons</a></li>
+                                <li ng-class="{active: isSet(3)}"><a href ng-click="setTab(3);" data-toggle="tab" aria-expanded="true"><span class="icon mdi"><img src="assets/img/icons/tab/driver-beacon.png" alt=""></span>Driver Beacons</a></li>
+                            </ul>
+                            <div class="tab-content" >
+                                <div id="serfs" ng-show="isSet(1)"><!-- class="tab-pane active" -->
+                                    <div class="row">
+                                        <div class="page-title">
+                                            <div class="col-sm-3">
+                                                <div class="input-group">
+                                                    <input placeholder="Search.." class="form-control search-input" ng-model="text" ng-change="searchSerf(text);" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 pull-right text-right action-icons">
+                                                <a href="" class=""><img src="assets/img/icons/tab/export.png" title="Export" alt=""></a>
+                                                <a href="" class=""><img src="assets/img/icons/tab/copy.png" title="Copy" alt=""></a>
+                                                <a href="" class="" data-toggle="modal" data-target="#form-bp1" ng-click="addOrEditSerf(undefined);"><img src="assets/img/icons/tab/add.png" title="Add" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <center><div ng-show="serfressuccessmessage" style="color:#009933">{{serfressuccessmessage}}</div></center>
+                                    <center><div ng-show="serfreserrormessage" style="color:#ff3300">{{serfreserrormessage}}</div></center>
+                                    <table class="table table-condensed table-bordered table-striped table-inverted">
+                                        <thead>
+                                            <tr>
+                                                <th>UID</th>
+                                                <th>Device Name</th>
+                                                <th>MAC ID</th>
+                                                
+                                                <th>Serf ID</th>
+                                                
+                                                
+                                                <th class="text-center"><img src="assets/img/icons/table/edit.png" alt=""></th>
+                                                <th class="text-center"><img src="assets/img/icons/table/update.png" alt=""></th>
+                                                <th class="text-center"><img src="assets/img/icons/table/rollback.png" alt=""></th>
+                                                <th class="text-center"><img src="assets/img/icons/table/step.png" alt=""></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="serf in serfs">
+                                                <td>{{::serf.uid}}</td>
+                                                <td>{{::serf.deviceName}}</td>
+                                                <td>{{::serf.macId}}</td>
+                                                <td>{{::serf.uuid}}</td>
+                                                
+                                                <!-- <td class="text-success">Active</td> -->
+                                                <td class="actions"><a href="" data-toggle="modal" data-target="#form-bp1" placeholder="Edit" ng-click="addOrEditSerf(serf);"><img src="assets/img/icons/tab/edit.png" title="Edit" alt=""></a></td>
+                                                <td class="actions"><a href="" placeholder="Validate & Update" ng-click="validateAndupdateSerf(serf);"><img src="assets/img/icons/tab/update.png" title="Sync & Update" alt=""></a></td>
+                                                <td class="actions"><a href="" placeholder="Rollback" ng-click="rollbackSerf(serf);"><img src="assets/img/icons/tab/rollback.png" title="Rollback" alt=""></a></td>
+                                                <td class="actions"><a href="" placeholder="Restore" ng-click="restoreSerf(serf);"><img src="assets/img/icons/tab/step.png" title="Restore" alt=""></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="pagination-text" ng-cloak>Showing {{(size*(page-1))+1}} to {{(size*page)-(size-numberOfElements)}} of {{totalElements}} entries</p>
+                                        </div>
+                                        <div class="col-sm-6 text-right">
+                                            <nav>
+<!--                                                 <ul class="pagination">
+                                                    <li><a href="#" aria-label="Previous"><span aria-hidden="true" class="mdi mdi-chevron-left"></span></a></li>
+                                                    <li class="active"><a href="#">1</a></li>
+                                                     <li><a href="#">2</a></li>
+                                                    <li><a href="#">3</a></li>
+                                                    <li><a href="#">4</a></li>
+                                                    <li><a href="#">5</a></li>
+                                                    <li><a href="#">6</a></li>
+                                                    <li><a href="#">7</a></li>
+                                                    <li><a href="#" aria-label="Next"><span aria-hidden="true" class="mdi mdi-chevron-right"></span></a></li>
+                                                </ul> -->                                                  <!-- pg-href="" -->
+                                                <ul><paging href="" page="page"
+                                                 page-size="size" 
+                                                 total="totalElements"
+                                                  show-prev-next="true"
+                                                 show-first-last="true"
+                                                 paging-action="pageChanged(page)">
+                                                 </paging></ul>
+
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="wp-beacons" ng-show="isSet(2)"> <!-- class="tab-pane cont" -->
+                                    <div class="row">
+                                        <div class="page-title">
+                                            <div class="col-sm-3">
+                                                <div class="input-group">
+                                                    <input placeholder="Search.." class="form-control search-input" ng-model="text" ng-change="searchWPBeacon(text);" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 pull-right text-right action-icons">
+                                                <a href="" class=""><img src="assets/img/icons/tab/export.png" title="Export" alt=""></a>
+                                                <a href="" class=""><img src="assets/img/icons/tab/copy.png" title="Copy" alt=""></a>
+                                                <a href="" class="" data-toggle="modal" data-target="#form-wpb" ng-click="addOrEditWpbeacon(undefined);"><img src="assets/img/icons/tab/add.png" title="Add" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <center><div ng-show="wpsuccessmessage" style="color:#009933">{{wpsuccessmessage}}</div></center>
+                                    <center><div ng-show="wperrormessage" style="color:#ff3300">{{wperrormessage}}</div></center>
+                                    <table class="table table-condensed table-bordered table-striped table-inverted">
+                                        <thead>
+                                            <tr>
+                                                <th>UUID</th>
+                                                <th>Mac ID</th>
+                                                <th>Major</th>
+                                                <th>Minor</th>
+                                                <th>Beacon Period</th>
+                                                <th>Tx Power</th>
+                                                <th>Status</th>
+                                                <th class="text-center"><img src="assets/img/icons/table/edit.png" alt=""></th>
+                                                <th class="text-center"><img src="assets/img/icons/table/rollback.png" alt=""></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="wpbeacon in wpbeacons">
+                                               <td>{{::wpbeacon.uuid}}</td>
+                                               <td>{{::wpbeacon.macId}}</td>
+                                               <td>{{::wpbeacon.major}}</td>
+                                               <td>{{::wpbeacon.minor}}</td>
+                                                <td>{{::wpbeacon.beaconPeriod}}</td>
+                                                <td>{{::wpbeacon.txPower}}</td>
+                                                <td>{{::wpbeacon.status}}</td>
+                                                <td class="actions"><a href="" placeholder="Edit" data-toggle="modal" data-target="#form-wpb" ng-click="addOrEditWpbeacon(wpbeacon);"><img src="assets/img/icons/tab/edit.png" title="Edit" alt=""></a></td>
+                                                <td class="actions"><a href="" placeholder="Rollback" ng-click="rollbackWpBeacon(wpbeacon);"><img src="assets/img/icons/tab/rollback.png" title="Rollback" alt=""></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="pagination-text" ng-cloak>Showing {{(size*(page-1))+1}} to {{(size*page)-(size-numberOfElements)}} of {{totalElements}} entries</p>
+                                        </div>
+                                        <div class="col-sm-6 text-right">
+                                            <nav>
+<!--                                                 <ul class="pagination">
+                                                    <li><a href="#" aria-label="Previous"><span aria-hidden="true" class="mdi mdi-chevron-left"></span></a></li>
+                                                    <li class="active"><a href="#">1</a></li>
+                                                    <li><a href="#">2</a></li>
+                                                    <li><a href="#">3</a></li>
+                                                    <li><a href="#">4</a></li>
+                                                    <li><a href="#">5</a></li>
+                                                    <li><a href="#">6</a></li>
+                                                    <li><a href="#">7</a></li>
+                                                    <li><a href="#" aria-label="Next"><span aria-hidden="true" class="mdi mdi-chevron-right"></span></a></li>
+                                                </ul> -->
+                                                  <ul><paging href="" page="page"
+                                                 page-size="size" 
+                                                 total="totalElements"
+                                                  show-prev-next="true"
+                                                 show-first-last="true"
+                                                 paging-action="wppageChanged(page);">
+                                                 </paging></ul>
+                                                
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="driver-beacons" ng-show="isSet(3)"><!-- class="tab-pane cont" -->
+                                    <div class="row">
+                                        <div class="page-title">
+                                            <div class="col-sm-3">
+                                                <div class="input-group">
+                                                    <input placeholder="Search.." class="form-control search-input" ng-model="text" ng-change="searchDriverBeacon(text);" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 pull-right text-right action-icons">
+                                                <a href="" class=""><img src="assets/img/icons/tab/export.png" title="Export" alt=""></a>
+                                                <a href="" class=""><img src="assets/img/icons/tab/copy.png" title="Copy" alt=""></a>
+                                                <a href="" class="" data-toggle="modal" data-target="#form-idb" ng-click="addOrEditDriverbeacon(undefined);"><img src="assets/img/icons/tab/add.png" title="Add" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <center><div ng-show="driversuccessmessage" style="color:#009933">{{driversuccessmessage}}</div></center>
+                                    <center><div ng-show="drivererrormessage" style="color:#ff3300">{{drivererrormessage}}</div></center>
+                                    <div ng-show=""></div>
+                                    <table class="table table-condensed table-bordered table-striped table-inverted">
+                                        <thead>
+                                            <tr>
+                                                <th>UUID</th>
+                                                <th>Mac ID</th>
+                                                <th>Major</th>
+                                                <th>Minor</th>
+                                                <th>Beacon Period</th>
+                                                <th>Tx Power</th>
+                                                <th>Status</th>
+                                                <th class="text-center"><a href="#"><img src="assets/img/icons/table/edit.png" alt=""></a></th>
+                                                <th class="text-center"><a href="#"><img src="assets/img/icons/table/rollback.png" alt=""></a></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="driverbeacon in driverbeacons">
+                                                <td>{{::driverbeacon.uuid}}</td>
+                                                <td>{{::driverbeacon.macId}}</td>
+                                                <td>{{::driverbeacon.major}}</td>
+                                                <td>{{::driverbeacon.minor}}</td>
+                                                <td>{{::driverbeacon.beaconPeriod}}</td>
+                                                <td>{{::driverbeacon.txPower}}</td>
+                                                <td>{{::driverbeacon.status}}</td>
+                                                <td class="actions"><a href="" data-toggle="modal" data-target="#form-idb" ng-click="addOrEditDriverbeacon(driverbeacon);"><img src="assets/img/icons/tab/edit.png" title="Edit" alt=""></a></td>
+                                                <td class="actions"><a href="" ng-click="rollbackDriverBeacon(driverbeacon);"><img src="assets/img/icons/tab/rollback.png" title="Rollback" alt=""></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="pagination-text" ng-cloak>Showing {{(size*(page-1))+1}} to {{(size*page)-(size-numberOfElements)}} of {{totalElements}} entries</p>
+                                        </div>
+                                        <div class="col-sm-6 text-right">
+                                            <nav>
+                                            <ul><paging href="" page="page"
+                                                 page-size="size" 
+                                                 total="totalElements"
+                                                  show-prev-next="true"
+                                                 show-first-last="true"
+                                                 paging-action="driverpageChanged(page);">
+                                                 </paging></ul>
+                                               <!--  <ul class="pagination">
+                                                    <li><a href="#" aria-label="Previous"><span aria-hidden="true" class="mdi mdi-chevron-left"></span></a></li>
+                                                    <li class="active"><a href="#">1</a></li>
+                                                    <li><a href="#">2</a></li>
+                                                    <li><a href="#">3</a></li>
+                                                    <li><a href="#">4</a></li>
+                                                    <li><a href="#">5</a></li>
+                                                    <li><a href="#">6</a></li>
+                                                    <li><a href="#">7</a></li>
+                                                    <li><a href="#" aria-label="Next"><span aria-hidden="true" class="mdi mdi-chevron-right"></span></a></li>
+                                                </ul> -->
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Form add serfs-->
+                <div id="form-bp1" tabindex="-1" role="dialog" class="modal fade">
+                    <div class="modal-dialog full-width">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" data-dismiss="modal" aria-hidden="true" class="close md-close"><span class="mdi mdi-close"></span></button>
+                                <a href="#" class="close md-help"><span class="mdi mdi-help"></span></a>
+                                <p ng-if="!serf.id" class="modal-title">Add Serf</p>
+                                <p ng-if="serf.id" class="modal-title">Update Serf</p>
+                            </div>
+                            <div class="modal-body">
+                                <form name="serfForm" class="form" ng-submit="save(serf.$valid);" novalidate>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p class="panel-heading panel-heading-divider">Basic Parameters</p>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <div class="form-group required">
+                                                        <label>UID</label>
+  												  <input type="text" ng-pattern="/^[a-fA-F0-9]*$/" no-special-char placeholder="1329F0020204201701A0000000000200" 
+  												  onfocus="this.placeholder = ''" onblur="this.placeholder = '1329F0020204201701A0000000000200'"
+  												  maxlength="32" minlength="32" name="uid" placeholder="" class="form-control" ng-model="serf.uid" ng-required="true"> 
+                                                  <span ng-show="serfForm.uid.$error && serfForm.uid.$touched && serfForm.uid.$invalid || 
+                                                  serfForm.$submitted && serfForm.uid.$invalid">
+                                                    <div style="color:red" ng-show="serfForm.uid.$error.required && serfForm.uid.$touched">Uid is required</div>
+                                                    <div style="color:red" ng-show="serfForm.uid.$error.pattern && serfForm.uid.$invalid">Please enter valid hexadecimal value</div>
+                                                    <div style="color:red" ng-show="serfForm.uid.$error.minlength">Please enter 32 characters</div> 
+                                                </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <div class="form-group required">
+                                                        <label>Device Name</label>
+                                                    <input type="text" name="deviceName" placeholder="" ng-init="serf.deviceName='abc'" class="form-control"  ng-model="serf.deviceName" ng-required="true">
+                                                    <span ng-show="serfForm.deviceName.$error && serfForm.deviceName.$touched && serfForm.deviceName.$invalid
+                                                     || serfForm.$submitted && serfForm.deviceName.$invalid">
+                                                    <div style="color:red" ng-message="required">Device Name is required</div>
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <div class="form-group required">
+                                                        <label>MAC ID</label>
+                                                    <input type="text" ng-readonly="serf.id" name="macId"  class="form-control"
+                                                     maxlength="17" minlength="17"  placeholder="B8:27:EB:5C:63:DF" onfocus="this.placeholder = ''" onblur="this.placeholder = 'B8:27:EB:5C:63:DF'"
+											ng-pattern="/^([0-9A-Fa-f]{2}[:]){5}([0-9A-F]{2})$/" ng-model="serf.macId" ng-required="true"> <!-- ng-pattern="/[0-9A-Fa-f]{17}/g"  -->
+											
+                                                    <span ng-show="serfForm.macId.$error && serfForm.macId.$touched && serfForm.macId.$invalid ||
+                                                     serfForm.$submitted && serfForm.macId.$invalid">
+                                                    <div style="color:red" ng-show="serfForm.macId.$error.required && serfForm.macId.$touched">Mac id is required</div>
+                                                    <div style="color: red"
+											ng-show="serfForm.macId.$error.pattern && serfForm.macId.$invalid || serfForm.macId.$error.minlength">Macid should be 17 chars hexadecimal value
+											</div>
+											<!-- <div style="color: red"
+											ng-show="serfForm.macId.$error.minlength">Macid is too short
+											</div> -->
+                                                     <!-- <div style="color:red" ng-show="serfForm.macId.$error.minlength">Macid has to be hexadecimal of 6 duplets(12 char) combination(:)</div> -->
+<!--                                                     <div style="color:red" ng-show="serfForm.macId.$dirty && serfForm.macId.$error.pattern">Macid has to ba hexadecimal of 17 characters</div>                                                     -->
+                                                    </span>
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p class="panel-heading panel-heading-divider">Serfs Beacon</p>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <div class="form-group required">
+                                                        <label>UUID</label>
+                                                    <input type="text" no-special-char ng-pattern="/^[a-fA-F0-9]*$/" name="uuid" placeholder="" class="form-control" ng-model="serf.uuid" maxlength="32" minlength="32" ng-required="true"> <!-- ng-pattern="/[0-9A-Fa-f]{32}/g" -->
+                                                    <span ng-show="serfForm.uuid.$error && serfForm.uuid.$touched && serfForm.uuid.$invalid || 
+                                                    serfForm.$submitted && serfForm.uuid.$invalid">
+                                                    <div style="color:red" ng-show="serfForm.uuid.$error.required && serfForm.uuid.$touched">Uuid is required</div>
+                                                   <!--  <div style="color:red" ng-message="required">Uuid is required</div> -->
+                                                    <div style="color:red" ng-show="serfForm.uuid.$error.pattern && serfForm.uuid.$invalid">Please enter valid hexadecimal value</div> 
+                                                    <div style="color:red" ng-show="serfForm.uuid.$error.minlength">Please enter 32 characters</div> 
+<!--                                                     <div style="color:red" ng-show="serfForm.uuid.$dirty && serfForm.uuid.$error.pattern">Uuid has to be hexa decimal of 32 characters</div>                                                     -->
+                                                    </span>
+<!--                                                     <p ng-show="serfForm.uuid.$error.minlength" class="help-block">Username is too short enter 32 char.</p> -->
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <div class="form-group required">
+                                                        <label>Major</label>
+                                                    <input type="text" name="major" no-special-char placeholder="" ng-pattern="/^[a-fA-F0-9]*$/"
+											ng-model="serf.major" maxlength="4" class="form-control" ng-model="serf.major" minlength="4" ng-required="true"><!-- ng-pattern="/[0-9A-Fa-f]{4}/g"  -->
+                                                    <span ng-show="serfForm.major.$error && serfForm.major.$touched && serfForm.major.$invalid || 
+                                                    serfForm.$submitted && serfForm.major.$invalid">
+                                                    <div style="color:red" ng-show="serfForm.major.$error.required && serfForm.major.$touched">Major is required</div>
+                                                  
+                                                    <div style="color:red" ng-show="serfForm.major.$error.pattern && serfForm.major.$invalid">Please enter valid hexadecimal value</div> 
+                                                    <div style="color:red" ng-show="serfForm.major.$error.minlength">Please enter 4 characters</div> 
+<!--                                                     <div style="color:red" ng-show="serfForm.uuid.$dirty && serfForm.uuid.$error.pattern">Uuid has to be hexa decimal of 32 characters</div>                                                     -->
+                                                    </span>
+													 
+                                                    
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <div class="form-group required">
+                                                        <label>Minor</label>
+                                                     <input type="text" name="minor" no-special-char placeholder="" ng-pattern="/^[a-fA-F0-9]*$/" maxlength="4" maxlength="4" class="form-control" ng-model="serf.minor" minlength="4" ng-required="true"><!-- ng-pattern="/[0-9A-Fa-f]{4}/g"  -->
+                                                     <!-- <span ng-show="serfForm.major.$error && serfForm.major.$touched && serfForm.major.$invalid || 
+                                                    serfForm.$submitted && serfForm.major.$invalid"> -->
+                                                    <div style="color:red" ng-show="serfForm.minor.$error.required && serfForm.minor.$touched">Minor is required</div>       
+                                                    <div style="color:red" ng-show="serfForm.minor.$error.pattern && serfForm.major.$invalid">Please enter valid hexadecimal value</div> 
+                                                    <div style="color:red" ng-show="serfForm.minor.$error.minlength">Please enter 4 characters</div> 
+                                                                                              
+                                                    <!-- </span> -->
+                                                   
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p class="panel-heading panel-heading-divider">Data Sync</p>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <div class="form-group required">
+                                                        <label>GPRS Connection</label>
+                                                    <select class="form-control" name="gprsConnection" ng-model="serf.gprsConnection" ng-required="true">
+														<option value=''>Select GPRS Conn</option>
+														<option value="YES">YES</option>
+														<option value="NO">NO</option>
+											
+													</select>
+                                                    <span ng-show="serfForm.gprsConnection.$error && serfForm.gprsConnection.$touched && serfForm.gprsConnection.$invalid 
+                                                    || serfForm.$submitted && serfForm.gprsConnection.$invalid">
+                                                    <div style="color:red" ng-message="required">Gprs Connection is required</div>
+<!--                                                     <div style="color:red" ng-show="serfForm.gprsConnection.$dirty && serfForm.gprsConnection.$error.pattern">Gprs connection has to be YES or NO</div>                                                     -->
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <div class="form-group required">
+                                                        <label>Sync Interval</label>
+                                                    <input type="text" name="syncTime" no-special-char ng-pattern="/^[3-9]$|^[1][0-9]$|^[2][0-9]$|^[3][0]$/" placeholder="3-30 mins" class="form-control"
+                                                    onfocus="this.placeholder = ''" onblur="this.placeholder = '3-30 mins'" 
+                                                    ng-model="serf.syncTime" minlength="1" maxlength="2" ng-required="true">
+                                                    <span ng-show="serfForm.syncTime.$error && serfForm.syncTime.$touched && serfForm.syncTime.$invalid || 
+                                                    serfForm.$submitted && serfForm.syncTime.$invalid">
+                                                    <div style="color:red" ng-show="serfForm.syncTime.$error.required && serfForm.syncTime.$touched">Sync Intervel is required</div>
+                                                     <div style="color:red" ng-show="serfForm.syncTime.$error.pattern && serfForm.syncTime.$invalid">enter valid value between 3-30</div>
+                                                      
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p class="panel-heading panel-heading-divider">ODB Configuration</p>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <div class="form-group required">
+                                                        <label>ODB Protocol</label>
+                                                        <select class="form-control" name="obdProtocol" placeholder="" ng-model="serf.obdProtocol" ng-required="true">
+                                                          <option value=''>Select obd protocol</option>
+                                                            <option value="0">0</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                            <option value="6">6</option>
+                                                            <option value="7">7</option>
+                                                            <option value="8">8</option>
+                                                            <option vlaue="9">9</option>
+                                                            <option value="A">A</option>
+                                                        </select>
+                                                   <span ng-show="serfForm.obdProtocol.$error && serfForm.obdProtocol.$touched && serfForm.obdProtocol.$invalid 
+                                                   || serfForm.$submitted && serfForm.obdProtocol.$invalid">
+                                                    <div style="color:red" ng-show="serfForm.obdProtocol.$error.required && serfForm.obdProtocol.$touched">Obd protocol is required</div>
+<!--                                                     <div style="color:red" ng-show="serfForm.obdProtocol.$dirty && serfForm.obdProtocol.$error.pattern">Obd protocol should be [0-9] or A</div> -->
+                                                    </span>                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <div class="form-group required">
+                                                        <label>ODB Sync Interval</label>
+                                                    <input type="number" name="obdTimeIntervel" ng-pattern="/^[3-9]$|^[1][0-5]$/" placeholder="3-15 mins" class="form-control" 
+                                                    onfocus="this.placeholder = ''" onblur="this.placeholder = '3-15 mins'"
+                                                    ng-model="serf.obdTimeIntervel" maxlength="2" ng-required="true">
+                                                   
+                                                    <div style="color:red" ng-show="serfForm.obdTimeIntervel.$error.required && serfForm.obdTimeIntervel.$touched">Obd Sync Intervel is required</div>
+                                                     <div style="color:red" ng-show="serfForm.obdTimeIntervel.$error.pattern && serfForm.obdTimeIntervel.$invalid">enter valid value between 3-15</div>
+                                                      <div style="color:red" ng-show="serfForm.obdTimeIntervel.$error.maxlength">plz enter only 2 digits</div>
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <p class="panel-heading panel-heading-divider">FTP</p>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <div class="form-group required">
+                                                        <label>Host</label>
+                                                    <input type="url" name="ftpUrl" placeholder="http://appraamlabs.com" onfocus="this.placeholder = ''" onblur="this.placeholder = 'http://appraamlabs.com'" class="form-control" ng-model="serf.ftpUrl" ng-required="true">
+                                                   <span ng-show="serfForm.ftpUrl.$error && serfForm.ftpUrl.$touched && serfForm.ftpUrl.$invalid ||
+                                                    serfForm.$submitted && serfForm.ftpUrl.$invalid">
+                                                    <div style="color:red" ng-show="serfForm.ftpUrl.$error.required && serfForm.ftpUrl.$touched && serfForm.ftpUrl.$invalid">FtpUrl is required</div>
+                                                    <div style="color:red" ng-show="serfForm.ftpUrl.$error.url && serfForm.ftpUrl.$touched">Not a valid Url</div>
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <div class="form-group required">
+                                                        <label>Username</label>
+                                                    <input type="email" name="userName" placeholder="example@appraamlabs.com" onfocus="this.placeholder = ''" onblur="this.placeholder = 'example@appraamlabs.com'" class="form-control" ng-model="serf.userName" ng-required="true">
+                                                   <span ng-show="serfForm.userName.$error && serfForm.userName.$touched && serfForm.userName.$invalid ||
+                                                    serfForm.$submitted && serfForm.userName.$invalid">
+                                                    <div style="color:red" ng-show="serfForm.userName.$error.required && serfForm.userName.$touched">UserName is required</div>
+                                                    <div style="color:red" ng-show="serfForm.userName.$error.email && serfForm.userName.$touched">Not a valid username</div>
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <div class="form-group required">
+                                                        <label>Password</label>
+                                                    <input type="password" name="password" placeholder="" class="form-control" ng-model="serf.password" ng-required="true">
+                                                   <span ng-show="serfForm.password.$error && serfForm.password.$touched && serfForm.password.$invalid ||
+                                                    serfForm.$submitted && serfForm.password.$invalid">
+                                                    <div style="color:red" ng-message="required">Password is required</div>
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <center><div style="color:#009933">{{succsmessage}}</div></center>
+                                    <center><div style="color:#ff3300">{{errmessage}}</div></center>
+                                    <div class="modal-footer">
+                                    <input ng-show="!serf.id" type="submit" ng-disabled="serfForm.$invalid" class="btn btn-lg btn-primary" id="submit" value="Submit">
+                                    <input ng-show="serf.id" type="submit" ng-disabled="serfForm.$invalid" class="btn btn-lg btn-primary" id="submit" value="Update">                                        
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--form wp beacon-->
+                <div id="form-wpb" tabindex="-1" role="dialog" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                          <form name="wpbeaconForm" ng-submit="saveWpbeacon(wpbeacon.$valid);" novalidate>
+                            <div class="modal-header">
+                                <button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="mdi mdi-close"></span></button>
+                                <a href="#" class="close md-help"><span class="mdi mdi-help"></span></a>
+                                <p class="modal-title" ng-if="!wpbeacon.id">Add Waypoint Beacon</p>
+                                <p class="modal-title" ng-if="wpbeacon.id">Update Waypoint Beacon</p>
+                            </div>
+                            <div class="modal-body">
+                                    <div class="row">
+                                     <div class="col-xs-4">
+                                            <div class="form-group required">
+                                                <label class="control-label">Beacon Type</label>
+                                            <select class="form-control" name="type" ng-model="wpbeacon.type" ng-required="true">
+														<option value=''>Select Beacon Type</option>
+														<option value="WPBEACON">WPBEACON</option>
+														<option value="ACTIVATOR">ACTIVATOR</option>
+														<option value="TERMINATOR">TERMINATOR</option>
+														<option value="PARKING">PARKING</option>
+														<option value="MAINTENANCE">MAINTENANCE</option>
+													</select>
+                                        </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="form-group required">
+                                                <label class="control-label">UUID</label>
+                                                <input type="text" ng-if="wpbeacon.type == 'WPBEACON' || wpbeacon.type == 'MAINTENANCE'" no-special-char ng-pattern="/^[b|B][a-fA-F0-9]*$/" name="uuid" placeholder="Uuid"
+                                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Uuid'" class="form-control" maxlength="32" 
+                                                 minlength="32" ng-model="wpbeacon.uuid" ng-required="true">
+                                                 <input type="text" ng-if="wpbeacon.type == 'ACTIVATOR'" no-special-char ng-pattern="/^[a|A][a-fA-F0-9]*$/" name="uuid" placeholder="Uuid"
+                                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Uuid'" class="form-control" maxlength="32" 
+                                                 minlength="32" ng-model="wpbeacon.uuid" ng-required="true">
+                                                 <input type="text" ng-if="wpbeacon.type == 'TERMINATOR'" no-special-char ng-pattern="/^[f|F][a-fA-F0-9]*$/" name="uuid" placeholder="Uuid"
+                                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Uuid'" class="form-control" maxlength="32" 
+                                                 minlength="32" ng-model="wpbeacon.uuid" ng-required="true">
+                                                 <input type="text" ng-if="wpbeacon.type == 'PARKING'" no-special-char ng-pattern="/^[c|C][a-fA-F0-9]*$/" name="uuid" placeholder="Uuid"
+                                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Uuid'" class="form-control" maxlength="32" 
+                                                 minlength="32" ng-model="wpbeacon.uuid" ng-required="true">
+                                                 <input type="text" ng-if="!wpbeacon.type" no-special-char ng-pattern="/^[c|C][a-fA-F0-9]*$/" name="uuid" placeholder="Uuid"
+                                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Uuid'" class="form-control" maxlength="32" 
+                                                 minlength="32" ng-model="wpbeacon.uuid" ng-required="true">
+                                                    <div style="color:red" ng-show="wpbeaconForm.uuid.$error.required && wpbeaconForm.uuid.$touched">Uuid is required</div>
+                                                    <div style="color:red" ng-show="wpbeaconForm.uuid.$error.pattern && wpbeaconForm.uuid.$invalid">Please enter valid hexadecimal value</div>
+                                                    <div style="color:red" ng-show="wpbeaconForm.uuid.$error.minlength">Enter 32 chars</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="form-group required">
+                                                <label class="control-label">Major</label>
+                                                <input type="text" no-special-char ng-pattern="/^[a-fA-F0-9]*$/" maxlength="4" minlength="4" name="major" placeholder="Major" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Major'" ng-pattern="/^[0-9]*$/" class="form-control"  ng-model="wpbeacon.major" ng-required="true">
+                                                    <div style="color:red" ng-show="wpbeaconForm.major.$error.required && wpbeaconForm.major.$touched">Major is required</div>
+                                                    <div style="color:red" ng-show="wpbeaconForm.major.$error.minlength">Enter 4 chars</div>
+                                                    <div style="color: red"
+									ng-show="wpbeaconForm.major.$error.pattern && wpbeaconForm.major.$invalid">Enter
+									valid hexadecimal value</div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                         <div class="row">
+                                        
+                                        <div class="col-xs-4">
+                                            <div class="form-group required">
+                                                <label class="control-label">Minor</label>
+                                            <input type="text" no-special-char ng-pattern="/^[a-fA-F0-9]*$/" name="minor" placeholder="Minor" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Minor'" class="form-control" ng-pattern="/^[0-9]*$/" maxlength="4" minlength="4" ng-model="wpbeacon.minor" ng-required="true">
+                                                    <div style="color:red" ng-show="wpbeaconForm.minor.$error.required && wpbeaconForm.minor.$touched">Minor is required</div>
+                                                    <div style="color:red" ng-show="wpbeaconForm.minor.$error.minlength">Enter 4 chars</div>
+                                                    <div style="color: red"
+									ng-show="wpbeaconForm.minor.$error.pattern && wpbeaconForm.minor.$invalid">Enter
+									valid hexadecimal value</div>
+                                            </div>
+                                        </div>
+                                    
+                                   
+                                        <div class="col-xs-4">
+                                            <div class="form-group required">
+                                                <label class="control-label">Beacon Period</label>
+                                            <!-- <input type="text" maxlength="2" no-special-char name="beaconPeriod" placeholder="1-20 seconds" 
+                                            ng-pattern="/^[1-9]$|^[1][0-9]$|^[2][0]$/" onfocus="this.placeholder = ''" onblur="this.placeholder = '1-20 seconds'" 
+                                            class="form-control" ng-model="wpbeacon.beaconPeriod" ng-required="true"> -->
+                                            <select class="form-control" name="beaconPeriod" ng-model="wpbeacon.beaconPeriod"  ng-required="true">
+														<option value=''>Select Beacon Period</option>
+														<option  value="0.1">0.1</option><option  value="0.5">0.5</option>
+														<option  value="1">1</option><option  value="2">2</option>
+														<option  value="3">3</option><option  value="4">4</option><option  value="5">5</option>
+														<option  value="6">6</option><option  value="7">7</option><option  value="8">8</option>
+														<option  value="9">9</option>
+											</select>
+											<div style="color:red" ng-show="wpbeaconForm.beaconPeriod.$error.required && wpbeaconForm.beaconPeriod.$touched">BeaconPeriod is required</div>
+                                                   <div style="color:red" ng-show="wpbeaconForm.beaconPeriod.$error.pattern && wpbeaconForm.beaconPeriod.$invalid">Please enter valid value between 1-20</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="form-group required">
+                                                <label class="control-label">Tx Power</label>
+                                          <!--   <input type="text" name="txPower" placeholder="-24 to 5 dbm" onfocus="this.placeholder = ''" 
+                                            onblur="this.placeholder = '-24 to 5 dbm'" 
+                                            	ng-pattern="/^-[1-9]$|^-[1][0-9]$|^-[2][0-4]$|^[0-5]$/"
+                                            class="form-control" maxlength="3" ng-model="wpbeacon.txPower" ng-required="true"> -->
+                                            <select class="form-control" name="txPower" ng-model="wpbeacon.txPower"  ng-required="true">
+														<option value=''>Select TX Power</option>
+														<option  value="-18">-18</option><option  value="-15">-15</option><option  value="-12">-12</option>
+														<option  value="-9">-9</option><option  value="-6">-6</option><option  value="-3">-3</option>
+														<option  value="0">0</option><option  value="1">1</option><option  value="2">2</option>
+														<option  value="3">3</option><option  value="4">4</option><option  value="5">5</option>
+											</select>
+                                            <div style="color:red" ng-show="wpbeaconForm.txPower.$error.required && wpbeaconForm.txPower.$touched">TxPower is required</div>
+                                            <div style="color:red" ng-show="wpbeaconForm.txPower.$error.pattern && wpbeaconForm.txPower.$invalid">Please enter valid value between -24 to 5</div>
+                                            </div>
+                                        </div>                                        
+                                        </div>
+                                        <div class="row">
+                                        
+                                        <div class="col-xs-4">
+                                            <div class="form-group required">
+                                            <label class="control-label">Mac Id</label>
+                                            <input type="text" name="macId" ng-readonly="wpbeacon.id" ng-pattern="/^([0-9A-Fa-f]{2}[:]){5}([0-9A-F]{2})$/" 
+                                            placeholder="B8:27:EB:5C:63:DF" onfocus="this.placeholder = ''" onblur="this.placeholder = 'B8:27:EB:5C:63:DF'"
+                                            maxlength="17" minlength="17"  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mac Id'" class="form-control" ng-model="wpbeacon.macId" ng-required="true">
+                                            <div style="color:red" ng-show="wpbeaconForm.macId.$error.required && wpbeaconForm.macId.$touched">MacId is required</div>
+                                           
+                                                    <div style="color: red"
+											ng-show="wpbeaconForm.macId.$error.pattern && wpbeaconForm.macId.$invalid || wpbeaconForm.macId.$error.minlength">Macid should be 17 chars hexadecimal value
+											</div>
+                                            </div>
+                                         </div>
+<!--                                           <div class="col-xs-4">
+                                            <div class="form-group required">
+                                            <label class="control-label">Battery status</label>
+                                            <input type="text" name="batterystatus" class="form-control" ng-readonly="true" ng-model="wpbeacon.batteryStatus">
+                                            <div style="color:red" ng-show="wpbeaconForm.batterystatus.$error.required && wpbeaconForm.batterystatus.$touched">Battery staatus is required</div>
+                                           
+                                                     <div style="color: red"
+											ng-show="wpbeaconForm.batterystatus.$error.pattern && wpbeaconForm.batterystatus.$invalid || wpbeaconForm.batterystatus.$error.minlength">Battery status should be of length 3 digits 
+											</div>
+                                            </div>
+                                         </div> -->
+                                         </div>
+                                       
+                            </div>
+                            <center><div ng-show="wpsuccessmessage" style="color:#009933">{{wpsuccessmessage}}</div></center>
+                             <center><div ng-show="wperrormessage" style="color:#ff3300">{{wperrormessage}}</div></center>
+                            <div class="modal-footer">
+                                <input type="submit" ng-show="!wpbeacon.id" ng-disabled="wpbeaconForm.$invalid" class="btn btn-lg btn-primary" value="Submit">
+                                <input type="submit" ng-show="wpbeacon.id" ng-disabled="wpbeaconForm.$invalid" class="btn btn-lg btn-primary" value="Update">
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--form ID beacon-->
+                <div id="form-idb" tabindex="-1" role="dialog" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                          <form name="driverbeaconForm" ng-submit="saveDriverbeacon(driverbeacon.$valid);" novalidate>
+                            <div class="modal-header">
+                                <button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="mdi mdi-close"></span></button>
+                                <a href="#" class="close md-help"><span class="mdi mdi-help"></span></a>
+                                <p class="modal-title" ng-if="!driverbeacon.id">Add Driver Beacon</p>
+                                <p class="modal-title" ng-if="driverbeacon.id">Update Driver Beacon</p>
+                            </div>
+                            <div class="modal-body">
+                                    <div class="row">
+                                    <div class="col-xs-4">
+                                            <div class="form-group required">
+                                                <label class="control-label">Beacon Type</label>
+                                            <select class="form-control" name="type" ng-model="driverbeacon.type"  ng-required="true">
+														<option value=''>Select Beacon Type</option>
+														<option  value="DRIVERBEACON">DRIVERBEACON</option>
+														
+											
+													</select>
+													
+                                        </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="form-group required">
+                                                <label class="control-label">UUID</label>
+                                           <input type="text" name="uuid" no-special-char ng-pattern="/^[D|d][a-fA-F0-9]*$/" placeholder="Enter Uuid" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Uuid'" class="form-control" maxlength="32" minlength="32" ng-model="driverbeacon.uuid" ng-required="true">
+                                             <div style="color:red" ng-show="driverbeaconForm.uuid.$error.required && driverbeaconForm.uuid.$touched">Uuid is required</div> 
+                                             <div style="color:red" ng-show="driverbeaconForm.uuid.$error.minlength">Enter 32 chars</div>
+                                             <div style="color:red" ng-show="driverbeaconForm.uuid.$error.pattern && driverbeaconForm.uuid.$invalid">Please enter valid hexadecimal value</div>
+                                             </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="form-group required">
+                                                <label class="control-label">Major</label>
+                                            <input type="text" name="major" no-special-char placeholder="Enter Major" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Major'" ng-pattern="/^[a-fA-F0-9]*$/" class="form-control" maxlength="4" minlength="4" ng-model="driverbeacon.major" ng-required="true">
+                                                   <div style="color:red" ng-show="driverbeaconForm.major.$error.required && driverbeaconForm.major.$touched">Major is required</div>
+                                                   <div style="color:red" ng-show="driverbeaconForm.major.$error.minlength">Enter 4 chars</div>
+                                                   	<div style="color: red"
+									ng-show="driverbeaconForm.major.$error.pattern && driverbeaconForm.major.$invalid">Enter
+									valid hexadecimal value</div>
+                                            </div>
+                                        </div>
+                                         </div>
+                                         <div class="row">
+                                        <div class="col-xs-4">
+                                            <div class="form-group required">
+                                                <label class="control-label">Minor</label>
+                                            <input type="text" name="minor" no-special-char placeholder="Enter Minor" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Minor'" ng-pattern="/^[a-fA-F0-9]*$/" class="form-control" maxlength="4" minlength="4" ng-model="driverbeacon.minor" ng-required="true">
+                                                    <div style="color:red" ng-show="driverbeaconForm.minor.$error.required && driverbeaconForm.minor.$touched">Minor is required</div>
+                                                    <div style="color:red" ng-show="driverbeaconForm.minor.$error.minlength">Enter 4 chars</div>
+                                                    <div style="color: red"
+									ng-show="driverbeaconForm.minor.$error.pattern && driverbeaconForm.minor.$invalid">Enter
+									valid hexadecimal value</div>
+                                            </div>
+                                        </div>
+                                   
+                                    
+                                        <div class="col-xs-4">
+                                            <div class="form-group required">
+                                                <label class="control-label">Beacon Period</label>
+                                            <!-- <input type="text" name="beaconPeriod" no-special-char ng-pattern="/^[1-9]$|^[1][0-9]$|^[2][0]$/"
+                                            placeholder="1-20 Seconds" onfocus="this.placeholder = ''" onblur="this.placeholder = '1-20 Seconds'" 
+                                            class="form-control" maxlength="2" ng-model="driverbeacon.beaconPeriod" ng-required="true"> -->
+                                            <select class="form-control" name="beaconPeriod" ng-model="driverbeacon.beaconPeriod"  ng-required="true">
+														<option value=''>Select Beacon Period</option>
+														<option  value="0.1">0.1</option><option  value="0.5">0.5</option>
+														<option  value="1">1</option><option  value="2">2</option>
+														<option  value="3">3</option><option  value="4">4</option><option  value="5">5</option>
+														<option  value="6">6</option><option  value="7">7</option><option  value="8">8</option>
+														<option  value="9">9</option>
+											</select>
+                                                    <div style="color:red" ng-show="driverbeaconForm.beaconPeriod.$error.required && driverbeaconForm.beaconPeriod.$touched">BeaconPeriod is required</div>
+                                                    <div style="color:red" ng-show="driverbeaconForm.beaconPeriod.$error.pattern && driverbeaconForm.beaconPeriod.$invalid">Please enter valid value between 1-20</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="form-group required">
+                                                <label class="control-label">Tx Power</label>
+                                            <!-- <input type="text" name="txPower" ng-pattern="/^-[1-9]$|^-[1][0-9]$|^-[2][0-4]$|^[0-5]$/" 
+                                            placeholder="-24 to 5 dbm" onfocus="this.placeholder = ''" onblur="this.placeholder = '-24 to 5 dbm'" 
+                                            class="form-control" maxlength="3" ng-model="driverbeacon.txPower" ng-required="true"> -->
+                                            <select class="form-control" name="txPower" ng-model="driverbeacon.txPower"  ng-required="true">
+														<option value=''>Select TX Power</option>
+														<option  value="-18">-18</option><option  value="-15">-15</option><option  value="-12">-12</option>
+														<option  value="-9">-9</option><option  value="-6">-6</option><option  value="-3">-3</option>
+														<option  value="0">0</option><option  value="1">1</option><option  value="2">2</option>
+														<option  value="3">3</option><option  value="4">4</option><option  value="5">5</option>
+											</select>
+                                            <div style="color:red" ng-show="driverbeaconForm.txPower.$error.required && driverbeaconForm.txPower.$touched">TxPower is required</div>
+                                            <div style="color:red" ng-show="driverbeaconForm.txPower.$error.pattern && driverbeaconForm.txPower.$invalid">Please enter valid value between -24 to 5</div>
+                                            </div>
+                                        </div>
+                                         </div>
+                                         <div class="row">
+                                        <div class="col-xs-4">
+                                            <div class="form-group required">
+                                                <label class="control-label">Mac Id</label>
+                                            <input type="text" name="macId" ng-readonly="driverbeacon.id" ng-pattern="/^([0-9A-Fa-f]{2}[:]){5}([0-9A-F]{2})$/" 
+                                            placeholder="B8:27:EB:5C:63:DF" onfocus="this.placeholder = ''" onblur="this.placeholder = 'B8:27:EB:5C:63:DF'"
+                                            maxlength="17" minlength="17"  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Mac Id'" class="form-control" maxlength="17" ng-model="driverbeacon.macId" ng-required="true">
+                                                    <div style="color:red" ng-show="driverbeaconForm.macId.$error.required && driverbeaconForm.macId.$touched">MacId is required</div>
+                                                    <div style="color: red"
+											ng-show="driverbeaconForm.macId.$error.pattern && driverbeaconForm.macId.$invalid || driverbeaconForm.macId.$error.minlength">Macid should be 17 chars hexadecimal value
+											</div>
+                                            </div>
+                                        </div></div>
+                                   
+                            </div>
+                            <center><div ng-show="dbsuccessmessage" style="color:#009933">{{dbsuccessmessage}}</div></center>
+                            <center><div ng-show="dberrormessage" style="color:#ff3300">{{dberrormessage}}</div></center>
+                            <div class="modal-footer">
+                                <input type="submit" ng-show="!driverbeacon.id" ng-disabled="driverbeaconForm.$invalid" class="btn btn-lg btn-primary" value="Submit">
+                                <input type="submit" ng-show="driverbeacon.id" ng-disabled="driverbeaconForm.$invalid" class="btn btn-lg btn-primary" value="Update">                                
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
